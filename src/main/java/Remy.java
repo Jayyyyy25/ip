@@ -19,7 +19,7 @@ public class Remy {
 
         while (running) {
             System.out.println(divider);
-            String userInput = scanner.nextLine();
+            String userInput = scanner.nextLine().trim();
             System.out.println(divider);
 
             // Split the inputs into command and arguments for easier case handling
@@ -50,8 +50,33 @@ public class Remy {
             case "unmark":
                 markAsUndone(Integer.parseInt(argument) - 1);
                 break;
+            case "todo":
+                add(todo(argument));
+                break;
+            case "deadline":
+                if (argument.contains("/by")) {
+                    String[] parts = argument.split("/by", 2);
+                    String title = parts[0].trim();
+                    String ddl = parts[1].trim();
+                    add(deadline(title, ddl));
+                } else {
+                    System.out.println("\t\t\tPlease use /by to specify a deadline for deadline task");
+                }
+                break;
+            case "event":
+                if (argument.contains("/from") && argument.contains("/to")) {
+                    String[] fromSplit = argument.split("/from", 2);
+                    String title = fromSplit[0].trim();
+                    String[] toSplit = fromSplit[1].split("/to", 2);
+                    String from = toSplit[0].trim();
+                    String to = toSplit[1].trim();
+                    add(event(title, from, to));
+                } else {
+                    System.out.println("\t\t\tPlease use /from and /to to specify a date / time for event task");
+                }
+                break;
             default:
-                add(command + argument);
+                System.out.println("\t\t\tInvalid command");
                 break;
         }
     }
@@ -74,9 +99,11 @@ public class Remy {
         }
     }
 
-    private static void add(String title) {
-        tasks.add(new Task(title));
-        System.out.println("\t\t\tadded: " + title);
+    private static void add(Task task) {
+        tasks.add(task);
+        System.out.println("\t\t\tGot it. I've added this task:");
+        System.out.println("\t\t\t\t" + task.getStatus());
+        System.out.println("\t\t\tNow you have " + tasks.size() + " tasks in the list.");
     }
 
     private static void markAsDone(int taskInd) {
@@ -89,5 +116,17 @@ public class Remy {
         tasks.get(taskInd).markAsUndone();
         System.out.println("\t\t\tOk, I've marked this task as not done yet:");
         System.out.println("\t\t\t" + tasks.get(taskInd).getStatus());
+    }
+
+    private static Task todo(String title) {
+        return new TodoTask(title);
+    }
+
+    private static Task deadline(String title, String ddl) {
+        return new DeadlineTask(title, ddl);
+    }
+
+    private static Task event(String title, String from, String to) {
+        return new EventTask(title, from, to);
     }
 }
