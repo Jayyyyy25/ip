@@ -10,7 +10,7 @@ public class EventTask extends Task {
 
     @Override
     public String getStatus() {
-        String formatted = String.format("[D]" + super.getStatus() + "(from: %s, to: %s)", this.from, this.to);
+        String formatted = String.format("[E]" + super.getStatus() + " (from: %s, to: %s)", this.from, this.to);
         return formatted;
     }
 }

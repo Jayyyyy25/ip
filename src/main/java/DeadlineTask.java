@@ -8,7 +8,7 @@ public class DeadlineTask extends Task {
 
     @Override
     public String getStatus() {
-        String formatted = String.format("[D]" + super.getStatus() + "(by: %s)", this.by);
+        String formatted = String.format("[D]" + super.getStatus() + " (by: %s)", this.by);
         return formatted;
     }
 }

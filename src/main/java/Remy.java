@@ -31,7 +31,7 @@ public class Remy {
     }
 
     private static void greetUser() {
-        System.out.println(logo);
+        // System.out.println(logo);
         System.out.println("\t\t\tHello! I'm " + name + ".\n" + "\t\t\tWhat can I do for you?");
     }
 
