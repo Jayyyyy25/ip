@@ -43,4 +43,19 @@
                         3.[E][ ] Team meeting (from: 10:00, to: 11:00)
 ----------------------------------------
 ----------------------------------------
+                        Invalid Arguments: Newly added task could not have blank title.
+----------------------------------------
+----------------------------------------
+                        Invalid Arguments: Please use /by to specify a deadline for deadline task.
+----------------------------------------
+----------------------------------------
+                        Invalid Arguments: Please use /from and /to to specify a date / time for event task.
+----------------------------------------
+----------------------------------------
+                        Invalid Arguments: Please provide a valid index to mark as done
+----------------------------------------
+----------------------------------------
+                        Invalid Command: 'blahblah' command not found
+----------------------------------------
+----------------------------------------
                         Bye. Hope to see you again soon!

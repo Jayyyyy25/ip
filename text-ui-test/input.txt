@@ -6,4 +6,9 @@ mark 2
 list
 unmark 2
 list
+todo
+deadline Submit report /by
+event Team meeting /from 10:00
+mark three
+blahblah
 bye

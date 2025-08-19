@@ -26,7 +26,15 @@ public class Remy {
             String[] parts = userInput.split(" ", 2);
             String command = parts[0];
             String argument = parts.length > 1 ? parts[1] : "";
-            respond(command, argument);
+            try {
+                respond(command, argument);
+            } catch (InvalidArgumentException exp) {
+                System.out.println("\t\t\tInvalid Arguments: " + exp.getMessage());
+            } catch (InvalidCommandException exp) {
+                System.out.println("\t\t\tInvalid Command: " + exp.getMessage());
+            } catch (RemyException exp) {
+                System.out.println("\t\t\tError:" + exp.getMessage());
+            }
         }
     }
 
@@ -35,7 +43,17 @@ public class Remy {
         System.out.println("\t\t\tHello! I'm " + name + ".\n" + "\t\t\tWhat can I do for you?");
     }
 
-    private static void respond(String command, String argument) {
+    // Method to check whether valid index is provided
+    private static boolean canParseInt(String ind) {
+        try {
+            Integer.parseInt(ind);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static void respond(String command, String argument) throws RemyException {
         switch (command) {
             case "bye":
                 running = false;
@@ -45,39 +63,66 @@ public class Remy {
                 listing();
                 break;
             case "mark":
-                markAsDone(Integer.parseInt(argument) - 1);
+                if (!argument.isEmpty() && canParseInt(argument) && Integer.parseInt(argument) <= tasks.size()) {
+                    markAsDone(Integer.parseInt(argument) - 1);
+                } else {
+                    throw new InvalidArgumentException("Please provide a valid index to mark as done");
+                }
                 break;
             case "unmark":
-                markAsUndone(Integer.parseInt(argument) - 1);
+                if (!argument.isEmpty() && canParseInt(argument) && Integer.parseInt(argument) <= tasks.size()) {
+                    markAsUndone(Integer.parseInt(argument) - 1);
+                } else {
+                    throw new InvalidArgumentException("Please provide a valid index to mark as undone");
+                }
                 break;
             case "todo":
-                add(todo(argument));
+                if (!argument.isEmpty()) {
+                    add(todo(argument));
+                } else {
+                    throw new InvalidArgumentException("Newly added task could not have blank title.");
+                }
                 break;
             case "deadline":
-                if (argument.contains("/by")) {
+                if (argument.isEmpty()) {
+                    throw new InvalidArgumentException("Newly added task could not have blank description.");
+                } else if (argument.contains("/by")) {
                     String[] parts = argument.split("/by", 2);
                     String title = parts[0].trim();
+                    if (title.isEmpty()) {
+                        throw new InvalidArgumentException("Newly added task could not have blank title.");
+                    }
                     String ddl = parts[1].trim();
+                    if (ddl.isEmpty()) {
+                        throw new InvalidArgumentException("Please use /by to specify a deadline for deadline task.");
+                    }
                     add(deadline(title, ddl));
                 } else {
-                    System.out.println("\t\t\tPlease use /by to specify a deadline for deadline task");
+                    throw new InvalidArgumentException("Please use /by to specify a deadline for deadline task.");
                 }
                 break;
             case "event":
-                if (argument.contains("/from") && argument.contains("/to")) {
+                if (argument.isEmpty()) {
+                    throw new InvalidArgumentException("Newly added task could not have blank description.");
+                } else if (argument.contains("/from") && argument.contains("/to")) {
                     String[] fromSplit = argument.split("/from", 2);
                     String title = fromSplit[0].trim();
+                    if (title.isEmpty()) {
+                        throw new InvalidArgumentException("Newly added task could not have blank title.");
+                    }
                     String[] toSplit = fromSplit[1].split("/to", 2);
                     String from = toSplit[0].trim();
                     String to = toSplit[1].trim();
+                    if (from.isEmpty() || to.isEmpty()) {
+                        throw new InvalidArgumentException("Please use /from and /to to specify a date / time for event task.");
+                    }
                     add(event(title, from, to));
                 } else {
-                    System.out.println("\t\t\tPlease use /from and /to to specify a date / time for event task");
+                    throw new InvalidArgumentException("Please use /from and /to to specify a date / time for event task.");
                 }
                 break;
             default:
-                System.out.println("\t\t\tInvalid command");
-                break;
+                throw new InvalidCommandException("'" + command + "' " + "command not found");
         }
     }
 
