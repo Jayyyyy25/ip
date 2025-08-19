@@ -11,4 +11,6 @@ deadline Submit report /by
 event Team meeting /from 10:00
 mark three
 blahblah
+delete
+delete 1
 bye

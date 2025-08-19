@@ -66,14 +66,14 @@ public class Remy {
                 if (!argument.isEmpty() && canParseInt(argument) && Integer.parseInt(argument) <= tasks.size()) {
                     markAsDone(Integer.parseInt(argument) - 1);
                 } else {
-                    throw new InvalidArgumentException("Please provide a valid index to mark as done");
+                    throw new InvalidArgumentException("Please provide a valid index to mark as done.");
                 }
                 break;
             case "unmark":
                 if (!argument.isEmpty() && canParseInt(argument) && Integer.parseInt(argument) <= tasks.size()) {
                     markAsUndone(Integer.parseInt(argument) - 1);
                 } else {
-                    throw new InvalidArgumentException("Please provide a valid index to mark as undone");
+                    throw new InvalidArgumentException("Please provide a valid index to mark as undone.");
                 }
                 break;
             case "todo":
@@ -121,8 +121,15 @@ public class Remy {
                     throw new InvalidArgumentException("Please use /from and /to to specify a date / time for event task.");
                 }
                 break;
+            case "delete":
+                if (!argument.isEmpty() && canParseInt(argument) && Integer.parseInt(argument) <= tasks.size()) {
+                    delete(Integer.parseInt(argument) - 1);
+                } else {
+                    throw new InvalidArgumentException("Please provide a valid index to remove the task.");
+                }
+                break;
             default:
-                throw new InvalidCommandException("'" + command + "' " + "command not found");
+                throw new InvalidCommandException("'" + command + "' " + "command not found.");
         }
     }
 
@@ -173,5 +180,13 @@ public class Remy {
 
     private static Task event(String title, String from, String to) {
         return new EventTask(title, from, to);
+    }
+
+    private static void delete(int taskInd) {
+        Task task = tasks.get(taskInd);
+        tasks.remove(taskInd);
+        System.out.println("\t\t\tNoted. I've removed this task.");
+        System.out.println("\t\t\t\t" + task.getStatus());
+        System.out.println("\t\t\tNow you have " + tasks.size() + " tasks in the list.");
     }
 }

@@ -52,10 +52,18 @@
                         Invalid Arguments: Please use /from and /to to specify a date / time for event task.
 ----------------------------------------
 ----------------------------------------
-                        Invalid Arguments: Please provide a valid index to mark as done
+                        Invalid Arguments: Please provide a valid index to mark as done.
 ----------------------------------------
 ----------------------------------------
-                        Invalid Command: 'blahblah' command not found
+                        Invalid Command: 'blahblah' command not found.
+----------------------------------------
+----------------------------------------
+                        Invalid Arguments: Please provide a valid index to remove the task.
+----------------------------------------
+----------------------------------------
+                        Noted. I've removed this task.
+                                [T][ ] Buy groceries
+                        Now you have 2 tasks in the list.
 ----------------------------------------
 ----------------------------------------
                         Bye. Hope to see you again soon!
