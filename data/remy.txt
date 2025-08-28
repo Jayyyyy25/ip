@@ -1,0 +1,2 @@
+D | 0 | asgn 1 | Fri 1159
+E | 0 | club bonding | Sat 8pm | Sat 10pm
