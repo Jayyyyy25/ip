@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -16,8 +18,18 @@ public class Remy {
     private enum Command {
         BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE
     }
+    private static Storage dataStorage = new Storage("./data/remy.txt");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidArgumentException {
+        List<String> savedTasks = dataStorage.load();
+        for (String line : savedTasks) {
+            try {
+                tasks.add(Task.parseTask(line));
+            } catch (InvalidArgumentException e) {
+                throw new InvalidArgumentException("Line with invalid task type found");
+            }
+        }
+
         greetUser();
 
         while (running) {
@@ -159,6 +171,11 @@ public class Remy {
 
     private static void add(Task task) {
         tasks.add(task);
+        try {
+            dataStorage.appendLine(task.toString());
+        } catch (IOException e) {
+            System.out.println("\t\t\tError adding new task: " + e.getMessage());
+        }
         System.out.println("\t\t\tGot it. I've added this task:");
         System.out.println("\t\t\t\t" + task.getStatus());
         System.out.println("\t\t\tNow you have " + tasks.size() + " tasks in the list.");
@@ -166,12 +183,22 @@ public class Remy {
 
     private static void markAsDone(int taskInd) {
         tasks.get(taskInd).markAsDone();
+        try {
+            dataStorage.updateLine(taskInd, tasks.get(taskInd).toString());
+        } catch (IOException e) {
+            System.out.println("\t\t\tError updating task completeness: " + e.getMessage());
+        }
         System.out.println("\t\t\tNice! I've marked this task as done:");
         System.out.println("\t\t\t" + tasks.get(taskInd).getStatus());
     }
 
     private static void markAsUndone(int taskInd) {
         tasks.get(taskInd).markAsUndone();
+        try {
+            dataStorage.updateLine(taskInd, tasks.get(taskInd).toString());
+        } catch (IOException e) {
+            System.out.println("\t\t\tError updating task completeness: " + e.getMessage());
+        }
         System.out.println("\t\t\tOk, I've marked this task as not done yet:");
         System.out.println("\t\t\t" + tasks.get(taskInd).getStatus());
     }
@@ -191,6 +218,11 @@ public class Remy {
     private static void delete(int taskInd) {
         Task task = tasks.get(taskInd);
         tasks.remove(taskInd);
+        try {
+            dataStorage.deleteLine(taskInd);
+        } catch (IOException e) {
+            System.out.println("\t\t\tError deleting task: " + e.getMessage());
+        }
         System.out.println("\t\t\tNoted. I've removed this task.");
         System.out.println("\t\t\t\t" + task.getStatus());
         System.out.println("\t\t\tNow you have " + tasks.size() + " tasks in the list.");
