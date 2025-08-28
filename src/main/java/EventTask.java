@@ -1,16 +1,20 @@
 import jdk.jfr.Event;
 
-public class EventTask extends Task {
-    protected String from;
-    protected String to;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public EventTask(String title, String from, String to) {
+public class EventTask extends Task {
+    protected LocalDateTime from;
+    protected LocalDateTime to;
+
+    public EventTask(String title, LocalDateTime from, LocalDateTime to) {
         super(title);
         this.from = from;
         this.to = to;
     }
 
-    public EventTask(String title, String from, String to, boolean isDone) {
+    public EventTask(String title, LocalDateTime from, LocalDateTime to, boolean isDone) {
         super(title, isDone);
         this.from = from;
         this.to = to;
@@ -18,12 +22,28 @@ public class EventTask extends Task {
 
     @Override
     public String getStatus() {
-        String formatted = String.format("[E]" + super.getStatus() + " (from: %s, to: %s)", this.from, this.to);
-        return formatted;
+        return String.format("[E]" + super.getStatus() + " (from: %s, to: %s)", this.fromDateString(),
+                this.toDateString());
     }
 
     @Override
     public String toString() {
-        return "E | " + super.toString() + " | " + this.from + " | " + this.to;
+        return "E | " + super.toString() + " | " + this.fromDateString() + " | " + this.toDateString();
+    }
+
+    public String fromDateString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
+        return this.from.format(formatter);
+    }
+
+    public String toDateString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
+        return this.to.format(formatter);
+    }
+
+    @Override
+    public boolean isCovered(LocalDate date) {
+        return this.from.toLocalDate().equals(date) || this.to.toLocalDate().equals(date) ||
+                (this.from.toLocalDate().isBefore(date) && this.to.toLocalDate().isAfter(date));
     }
 }
