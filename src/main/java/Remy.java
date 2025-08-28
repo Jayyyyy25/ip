@@ -1,7 +1,10 @@
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Remy {
     private static String name = "Remy";
@@ -77,7 +80,26 @@ public class Remy {
                 exitBot();
                 break;
             case LIST:
-                listing();
+                if (argument.isEmpty()) {
+                    listing();
+                } else if (argument.contains("/on")) {
+                    String[] parts = argument.split("/on", 2);
+                    String dateStr = parts[1].trim();
+                    if (dateStr.isEmpty()) {
+                        throw new InvalidArgumentException(
+                                "Please use /by to specify a date for specific date listing.");
+                    }
+                    LocalDate date;
+                    try {
+                        date = DateParser.parseDateTime(dateStr).toLocalDate();
+                    } catch (Exception e) {
+                        throw new InvalidDateFormatException(e.getMessage() +
+                                "\n\t\t\tPlease use a valid date format (DD/MM/YYYY HH:MM) to specify date");
+                    }
+                    dateListing(date);
+                } else {
+                    throw new InvalidCommandException("Invalid commnd type");
+                }
                 break;
             case MARK:
                 if (!argument.isEmpty() && canParseInt(argument) && Integer.parseInt(argument) <= tasks.size()) {
@@ -109,9 +131,16 @@ public class Remy {
                     if (title.isEmpty()) {
                         throw new InvalidArgumentException("Newly added task could not have blank title.");
                     }
-                    String ddl = parts[1].trim();
-                    if (ddl.isEmpty()) {
+                    String ddlStr = parts[1].trim();
+                    if (ddlStr.isEmpty()) {
                         throw new InvalidArgumentException("Please use /by to specify a deadline for deadline task.");
+                    }
+                    LocalDateTime ddl;
+                    try {
+                        ddl = DateParser.parseDateTime(ddlStr);
+                    } catch (Exception e) {
+                        throw new InvalidDateFormatException(e.getMessage() +
+                                "\n\t\t\tPlease use a valid date format (DD/MM/YYYY HH:MM) to specify deadline");
                     }
                     add(deadline(title, ddl));
                 } else {
@@ -128,10 +157,19 @@ public class Remy {
                         throw new InvalidArgumentException("Newly added task could not have blank title.");
                     }
                     String[] toSplit = fromSplit[1].split("/to", 2);
-                    String from = toSplit[0].trim();
-                    String to = toSplit[1].trim();
-                    if (from.isEmpty() || to.isEmpty()) {
+                    String fromStr = toSplit[0].trim();
+                    String toStr = toSplit[1].trim();
+                    if (fromStr.isEmpty() || toStr.isEmpty()) {
                         throw new InvalidArgumentException("Please use /from and /to to specify a date / time for event task.");
+                    }
+                    LocalDateTime from;
+                    LocalDateTime to;
+                    try {
+                        from = DateParser.parseDateTime(fromStr);
+                        to = DateParser.parseDateTime(toStr);
+                    } catch (Exception e) {
+                        throw new InvalidDateFormatException(e.getMessage() +
+                                "\n\t\t\tPlease use a valid date format (DD/MM/YYYY HH:MM) to specify time");
                     }
                     add(event(title, from, to));
                 } else {
@@ -166,6 +204,23 @@ public class Remy {
         for (int i = 0; i < tasks.size(); i++) {
             int ind = i + 1;
             System.out.println("\t\t\t" + ind + "." + tasks.get(i).getStatus());
+        }
+    }
+
+    private static void dateListing(LocalDate date) {
+        List<Task> taskOnDate = tasks.stream()
+                .filter(task -> task.isCovered(date))
+                .toList();
+
+        if (taskOnDate.isEmpty()) {
+            System.out.println("\t\t\tYou have no tasks in the list at this moment.");
+        } else {
+            System.out.println("\t\t\tHere are the tasks in the list.");
+        }
+
+        for (int i = 0; i < taskOnDate.size(); i++) {
+            int ind = i + 1;
+            System.out.println("\t\t\t" + ind + "." + taskOnDate.get(i).getStatus());
         }
     }
 
@@ -207,11 +262,11 @@ public class Remy {
         return new TodoTask(title);
     }
 
-    private static Task deadline(String title, String ddl) {
+    private static Task deadline(String title, LocalDateTime ddl) {
         return new DeadlineTask(title, ddl);
     }
 
-    private static Task event(String title, String from, String to) {
+    private static Task event(String title, LocalDateTime from, LocalDateTime to) {
         return new EventTask(title, from, to);
     }
 

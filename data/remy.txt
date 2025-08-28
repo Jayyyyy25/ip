@@ -1,2 +1,6 @@
-D | 0 | asgn 1 | Fri 1159
-E | 0 | club bonding | Sat 8pm | Sat 10pm
+D | 1 | asgn 1 | Aug 29 2025 23:59
+E | 1 | club bonding | Aug 31 2025 20:00 | Aug 31 2025 22:00
+D | 0 | techjam submission | Aug 31 2025 09:00
+T | 0 | paperwork
+E | 0 | hackathon sprint | Aug 28 2025 09:00 | Aug 31 2025 09:00
+D | 0 | homework | Sep 16 2025 23:59
