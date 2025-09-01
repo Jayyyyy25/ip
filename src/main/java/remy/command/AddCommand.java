@@ -1,6 +1,14 @@
+package remy.command;
+
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import remy.task.TaskList;
+import remy.task.Task;
+import remy.task.TodoTask;
+import remy.task.DeadlineTask;
+import remy.task.EventTask;
+import remy.util.Storage;
+import remy.util.Ui;
 
 public class AddCommand extends Command {
     private String title;
@@ -44,7 +52,7 @@ public class AddCommand extends Command {
         try {
             storage.appendLine(task.toString());
         } catch (IOException e) {
-            System.out.println("\t\t\tError adding new task: " + e.getMessage());
+            System.out.println("\t\t\tError adding new remy.task: " + e.getMessage());
         }
 
         ui.showAdded(tasks, taskInd);

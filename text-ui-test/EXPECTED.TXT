@@ -1,18 +1,18 @@
-                        Hello! I'm Remy.
+                        Hello! I'm remy.ui.Remy.
                         What can I do for you?
 ----------------------------------------
 ----------------------------------------
-                        Got it. I've added this task:
+                        Got it. I've added this remy.task:
                                 [T][ ] Buy groceries
                         Now you have 1 tasks in the list.
 ----------------------------------------
 ----------------------------------------
-                        Got it. I've added this task:
+                        Got it. I've added this remy.task:
                                 [D][ ] Submit report (by: 2025-08-20)
                         Now you have 2 tasks in the list.
 ----------------------------------------
 ----------------------------------------
-                        Got it. I've added this task:
+                        Got it. I've added this remy.task:
                                 [E][ ] Team meeting (from: 10:00, to: 11:00)
                         Now you have 3 tasks in the list.
 ----------------------------------------
@@ -23,7 +23,7 @@
                         3.[E][ ] Team meeting (from: 10:00, to: 11:00)
 ----------------------------------------
 ----------------------------------------
-                        Nice! I've marked this task as done:
+                        Nice! I've marked this remy.task as done:
                         [D][X] Submit report (by: 2025-08-20)
 ----------------------------------------
 ----------------------------------------
@@ -33,7 +33,7 @@
                         3.[E][ ] Team meeting (from: 10:00, to: 11:00)
 ----------------------------------------
 ----------------------------------------
-                        Ok, I've marked this task as not done yet:
+                        Ok, I've marked this remy.task as not done yet:
                         [D][ ] Submit report (by: 2025-08-20)
 ----------------------------------------
 ----------------------------------------
@@ -43,25 +43,25 @@
                         3.[E][ ] Team meeting (from: 10:00, to: 11:00)
 ----------------------------------------
 ----------------------------------------
-                        Invalid Arguments: Newly added task could not have blank title.
+                        Invalid Arguments: Newly added remy.task could not have blank title.
 ----------------------------------------
 ----------------------------------------
-                        Invalid Arguments: Please use /by to specify a deadline for deadline task.
+                        Invalid Arguments: Please use /by to specify a deadline for deadline remy.task.
 ----------------------------------------
 ----------------------------------------
-                        Invalid Arguments: Please use /from and /to to specify a date / time for event task.
+                        Invalid Arguments: Please use /from and /to to specify a date / time for event remy.task.
 ----------------------------------------
 ----------------------------------------
                         Invalid Arguments: Please provide a valid index to mark as done.
 ----------------------------------------
 ----------------------------------------
-                        Invalid Command: 'blahblah' command not found.
+                        Invalid remy.command.Command: 'blahblah' remy.command not found.
 ----------------------------------------
 ----------------------------------------
-                        Invalid Arguments: Please provide a valid index to remove the task.
+                        Invalid Arguments: Please provide a valid index to remove the remy.task.
 ----------------------------------------
 ----------------------------------------
-                        Noted. I've removed this task.
+                        Noted. I've removed this remy.task.
                                 [T][ ] Buy groceries
                         Now you have 2 tasks in the list.
 ----------------------------------------
