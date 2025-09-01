@@ -1,0 +1,18 @@
+public class ExitCommand extends Command {
+    private boolean isRunning;
+
+    public ExitCommand() {
+        this.isRunning = true;
+    }
+
+    @Override
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
+        this.isRunning = false;
+        ui.showBye();
+    }
+
+    @Override
+    public boolean isRunning() {
+        return this.isRunning;
+    }
+}

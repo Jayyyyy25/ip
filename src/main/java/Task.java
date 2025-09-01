@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Task {
     private String title;
@@ -45,7 +44,7 @@ public class Task {
             String[] titleSplit = taskInfo.split("\\|", 2);
             title = titleSplit[0].trim();
             String ddl = titleSplit[1].trim();
-            return new DeadlineTask(title, DateParser.parseDateTime(ddl), isDone != 0);
+            return new DeadlineTask(title, Parser.parseDateTime(ddl), isDone != 0);
         case "E":
             isDone = Integer.parseInt(isDoneStr);
             String[] fromSplit = taskInfo.split("\\|", 2);
@@ -53,7 +52,7 @@ public class Task {
             String [] toSplit = fromSplit[1].split("\\|", 2);
             String from = toSplit[0].trim();
             String to = toSplit[1].trim();
-            return new EventTask(title, DateParser.parseDateTime(from), DateParser.parseDateTime(to), isDone != 0);
+            return new EventTask(title, Parser.parseDateTime(from), Parser.parseDateTime(to), isDone != 0);
         default:
             throw new InvalidArgumentException("Invalid string input");
         }
