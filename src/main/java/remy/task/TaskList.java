@@ -1,3 +1,8 @@
+package remy.task;
+
+import remy.exception.InvalidArgumentException;
+import remy.exception.RemyException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +20,7 @@ public class TaskList {
             try {
                 tasks.add(Task.parseTask(line));
             } catch (InvalidArgumentException e) {
-                throw new InvalidArgumentException("Line with invalid task type found");
+                throw new InvalidArgumentException("Line with invalid remy.task type found");
             }
         }
     }

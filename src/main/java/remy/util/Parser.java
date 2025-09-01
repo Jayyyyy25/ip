@@ -1,3 +1,11 @@
+package remy.util;
+
+import remy.command.*;
+import remy.exception.InvalidArgumentException;
+import remy.exception.InvalidCommandException;
+import remy.exception.InvalidDateFormatException;
+import remy.exception.RemyException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -62,13 +70,13 @@ public class Parser {
                     }
                     return new ListCommand(date);
                 } else {
-                    throw new InvalidCommandException(String.format("Invalid comment error: 'list %s' command not found", argument));
+                    throw new InvalidCommandException(String.format("Invalid comment error: 'list %s' remy.command not found", argument));
                 }
             case TODO:
                 if (!argument.isEmpty()) {
                     return new AddCommand(argument);
                 } else {
-                    throw new InvalidArgumentException("Newly added task could not have blank title.");
+                    throw new InvalidArgumentException("Newly added remy.task could not have blank title.");
                 }
             case DEADLINE:
                 if (!argument.isEmpty()) {
@@ -76,11 +84,11 @@ public class Parser {
                         String[] titleSplit = argument.split("/by", 2);
                         String title = titleSplit[0].trim();
                         if (title.isEmpty()) {
-                            throw new InvalidArgumentException("Newly added task could not have blank title.");
+                            throw new InvalidArgumentException("Newly added remy.task could not have blank title.");
                         }
                         String ddlStr = titleSplit[1].trim();
                         if (ddlStr.isEmpty()) {
-                            throw new InvalidArgumentException("Please use /by to specify a deadline for deadline task.");
+                            throw new InvalidArgumentException("Please use /by to specify a deadline for deadline remy.task.");
                         }
                         LocalDateTime ddl;
                         try {
@@ -92,22 +100,22 @@ public class Parser {
                         return new AddCommand(title, ddl);
                     }
                 } else {
-                    throw new InvalidArgumentException("Newly added task could not have blank title.");
+                    throw new InvalidArgumentException("Newly added remy.task could not have blank title.");
                 }
             case EVENT:
                 if (argument.isEmpty()) {
-                    throw new InvalidArgumentException("Newly added task could not have blank description.");
+                    throw new InvalidArgumentException("Newly added remy.task could not have blank description.");
                 } else if (argument.contains("/from") && argument.contains("/to")) {
                     String[] fromSplit = argument.split("/from", 2);
                     String title = fromSplit[0].trim();
                     if (title.isEmpty()) {
-                        throw new InvalidArgumentException("Newly added task could not have blank title.");
+                        throw new InvalidArgumentException("Newly added remy.task could not have blank title.");
                     }
                     String[] toSplit = fromSplit[1].split("/to", 2);
                     String fromStr = toSplit[0].trim();
                     String toStr = toSplit[1].trim();
                     if (fromStr.isEmpty() || toStr.isEmpty()) {
-                        throw new InvalidArgumentException("Please use /from and /to to specify a date / time for event task.");
+                        throw new InvalidArgumentException("Please use /from and /to to specify a date / time for event remy.task.");
                     }
                     LocalDateTime from;
                     LocalDateTime to;
@@ -120,7 +128,7 @@ public class Parser {
                     }
                     return new AddCommand(title, from, to);
                 } else {
-                    throw new InvalidArgumentException("Please use /from and /to to specify a date / time for event task.");
+                    throw new InvalidArgumentException("Please use /from and /to to specify a date / time for event remy.task.");
                 }
             case MARK:
                 if (!argument.isEmpty() && canParseInt(argument)) {
@@ -138,10 +146,10 @@ public class Parser {
                 if (!argument.isEmpty() && canParseInt(argument)) {
                     return new DeleteCommand(Integer.parseInt(argument) - 1);
                 } else {
-                    throw new InvalidArgumentException("Please provide a valid index to remove the task.");
+                    throw new InvalidArgumentException("Please provide a valid index to remove the remy.task.");
                 }
             default:
-                throw new InvalidCommandException(String.format("Invalid command error: '%s' command not found", command));
+                throw new InvalidCommandException(String.format("Invalid remy.command error: '%s' remy.command not found", command));
             }
         } catch (Exception e) {
             throw new RemyException(e.getMessage());
