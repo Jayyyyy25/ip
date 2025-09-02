@@ -19,20 +19,20 @@ public class Task {
     }
 
     public String getStatus() {
-        return (isDone ? "[X] " : "[ ] ") + this.title;
+        return (isDone ? "[X] " : "[ ] ") + title;
     }
 
     public void markAsDone() {
-        this.isDone = true;
+        isDone = true;
     }
 
     public void markAsUndone() {
-        this.isDone = false;
+        isDone = false;
     }
 
     @Override
     public String toString() {
-        return (this.isDone ? "1" : "0") + " | " + this.title;
+        return (isDone ? "1" : "0") + " | " + title;
     }
 
     public boolean isCovered(LocalDate date) {

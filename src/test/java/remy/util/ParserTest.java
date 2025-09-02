@@ -1,9 +1,16 @@
 package remy.util;
 
 import org.junit.jupiter.api.Test;
-import remy.command.*;
-import remy.exception.*;
-import remy.task.*;
+
+import remy.command.Command;
+import remy.command.AddCommand;
+
+import remy.exception.RemyException;
+
+import remy.task.EventTask;
+import remy.task.Task;
+import remy.task.TodoTask;
+import remy.task.DeadlineTask;
 
 import java.time.LocalDateTime;
 
@@ -44,6 +51,12 @@ class ParserTest {
     void testParseTaskDeadline() throws RemyException {
         Task task = Parser.parseTask("D | 1 | submit report | Sep 01 2025 23:59");
         assertTrue(task instanceof DeadlineTask);
+    }
+
+    @Test
+    void testParseTaskEvent() throws RemyException {
+        Task task = Parser.parseTask("E | 0 | meeting | Sep 01 2025 20:00 | Sep 01 2025 21:30");
+        assertTrue(task instanceof EventTask);
     }
 
     @Test

@@ -33,17 +33,17 @@ public class EventTask extends Task {
 
     public String fromDateString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
-        return this.from.format(formatter);
+        return from.format(formatter);
     }
 
     public String toDateString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
-        return this.to.format(formatter);
+        return to.format(formatter);
     }
 
     @Override
     public boolean isCovered(LocalDate date) {
-        return this.from.toLocalDate().equals(date) || this.to.toLocalDate().equals(date) ||
-                (this.from.toLocalDate().isBefore(date) && this.to.toLocalDate().isAfter(date));
+        return from.toLocalDate().equals(date) || to.toLocalDate().equals(date) ||
+                (from.toLocalDate().isBefore(date) && to.toLocalDate().isAfter(date));
     }
 }
