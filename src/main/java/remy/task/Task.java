@@ -48,21 +48,21 @@ public class Task {
      * </p>
      */
     public String getStatus() {
-        return (isDone ? "[X] " : "[ ] ") + this.title;
+        return (isDone ? "[X] " : "[ ] ") + title;
     }
 
     /**
      * Marks the task as done
      */
     public void markAsDone() {
-        this.isDone = true;
+        isDone = true;
     }
 
     /**
      * Unmark the task as done
      */
     public void markAsUndone() {
-        this.isDone = false;
+        isDone = false;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Task {
      */
     @Override
     public String toString() {
-        return (this.isDone ? "1" : "0") + " | " + this.title;
+        return (isDone ? "1" : "0") + " | " + title;
     }
 
     /**

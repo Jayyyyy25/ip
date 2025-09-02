@@ -1,12 +1,15 @@
 package remy.command;
 
 import java.io.IOException;
+
 import java.time.LocalDateTime;
+
 import remy.task.TaskList;
 import remy.task.Task;
 import remy.task.TodoTask;
 import remy.task.DeadlineTask;
 import remy.task.EventTask;
+
 import remy.util.Storage;
 import remy.util.Ui;
 
@@ -41,11 +44,11 @@ public class AddCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task task;
         if (deadline == null && from == null && to == null) {
-            task = new TodoTask(this.title);
+            task = new TodoTask(title);
         } else if (deadline != null) {
-            task = new DeadlineTask(this.title, this.deadline);
+            task = new DeadlineTask(title, deadline);
         } else {
-            task = new EventTask(this.title, this.from, this.to);
+            task = new EventTask(title, from, to);
         }
         int taskInd = tasks.addItem(task);
 

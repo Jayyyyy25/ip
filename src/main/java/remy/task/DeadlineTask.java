@@ -36,7 +36,7 @@ public class DeadlineTask extends Task {
      */
     public String dateString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
-        return this.by.format(formatter);
+        return by.format(formatter);
     }
 
     /**
@@ -47,6 +47,6 @@ public class DeadlineTask extends Task {
      */
     @Override
     public boolean isCovered(LocalDate date) {
-        return this.by.toLocalDate().equals(date);
+        return by.toLocalDate().equals(date);
     }
 }
