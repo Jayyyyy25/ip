@@ -1,0 +1,51 @@
+package remy.command;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import remy.task.TaskList;
+import remy.util.Storage;
+import remy.util.Ui;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class ExitCommandTest {
+    private TaskList tasks;
+    private MockUi ui;
+    private MockStorage storage;
+
+    @BeforeEach
+    void setUp() {
+        tasks = new TaskList();
+        ui = new MockUi();
+        storage = new MockStorage();
+    }
+
+    @Test
+    void testExecuteExit() {
+        ExitCommand cmd = new ExitCommand();
+        cmd.execute(tasks, ui, storage);
+
+        assertTrue(ui.exitWasCalled);
+    }
+
+    // --------- Mock dependencies ---------
+
+    static class MockUi extends Ui {
+        boolean exitWasCalled = false;
+
+        @Override
+        public void showBye() {
+            exitWasCalled = true;
+        }
+    }
+
+    static class MockStorage extends Storage {
+
+    }
+}
+
