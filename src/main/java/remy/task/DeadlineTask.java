@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A DeadlineTask represents a task that has a specific deadline.
+ * It extends the base Task class and adds a "by" date.
+ */
 public class DeadlineTask extends Task {
     protected LocalDateTime by;
 
@@ -27,11 +31,20 @@ public class DeadlineTask extends Task {
         return "D | " + super.toString() + " | " + this.dateString();
     }
 
+    /**
+     * Returns the formatted string of deadline date
+     */
     public String dateString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
         return this.by.format(formatter);
     }
 
+    /**
+     * Checks if the specified date matches the deadline date.
+     *
+     * @param date the date to check
+     * @return true if the task's deadline is on the specified date, false otherwise
+     */
     @Override
     public boolean isCovered(LocalDate date) {
         return this.by.toLocalDate().equals(date);
