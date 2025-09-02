@@ -17,7 +17,14 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Handles parsing the user input into executable {@link Command} objects,
+ * parsing stored data back into {@link Task} objects,
+ * and interpreting data/time strings into {@link LocalDateTime}
+ */
 public class Parser {
+
+    // Supported date/time objects for parsing the user inputs
     private static final List<DateTimeFormatter> DATE_FORMATS = Arrays.asList(
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"),
             DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"),
@@ -42,10 +49,19 @@ public class Parser {
             DateTimeFormatter.ofPattern("dd/MM/yyyy"),
             DateTimeFormatter.ofPattern("MMM dd yyyy")
     );
+
+    // Internal enumerations of valid commands
     private enum Commands {
         BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE
     }
 
+    /**
+     * Parses raw user input into executable {@link Command}
+     *
+     * @param userInput raw input entered by user
+     * @return an executable {@link Command}
+     * @throws RemyException if the command is invalid or arguments are missing
+     */
     public static Command parseCommand(String userInput) throws RemyException {
         String command;
         String argument;
@@ -169,6 +185,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a line of stored task data into a {@link Task} object
+     *
+     * @param data task data stored in text
+     * @return a {@link Task} object
+     * @throws RemyException if the data is invalid or improperly formatted
+     */
     public static Task parseTask(String data) throws RemyException {
         String taskType;
         String isDoneStr;
@@ -209,6 +232,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a user input date/time string into a {@link LocalDateTime} object
+     *
+     * @param input raw date/time string entered by user
+     * @return a {@link LocalDateTime} object
+     * @throws IllegalArgumentException if date/time string is not formatted well
+     */
     public static LocalDateTime parseDateTime(String input) {
         for (DateTimeFormatter formatter : DATE_FORMATS) {
             try {
@@ -222,7 +252,6 @@ public class Parser {
         throw new IllegalArgumentException("Unparseable date: " + input);
     }
 
-    // Method to check whether valid index is provided
     private static boolean canParseInt(String ind) {
         try {
             Integer.parseInt(ind);

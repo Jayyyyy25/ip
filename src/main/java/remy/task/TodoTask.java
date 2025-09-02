@@ -1,5 +1,9 @@
 package remy.task;
 
+/**
+ * A TodoTask represents a simple task without a date or time.
+ * It extends the base Task class.
+ */
 public class TodoTask extends Task {
     public TodoTask(String title) {
         super(title);

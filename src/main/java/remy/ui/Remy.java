@@ -8,11 +8,19 @@ import remy.util.Parser;
 import remy.util.Storage;
 import remy.util.Ui;
 
+/**
+ * Main class for running the Remy chatbot application
+ */
 public class Remy {
     private Ui ui;
     private TaskList tasks;
     private Storage storage;
 
+    /**
+     * Constructs a new {@code Remy} instance with the given file path for persistent storage
+     *
+     * @param filepath the path to the storage file for saving and loading tasks
+     */
     public Remy(String filepath) {
         ui = new Ui();
         storage = new Storage(filepath);
@@ -24,6 +32,13 @@ public class Remy {
         }
     }
 
+    /**
+     * Starts the Remy chatbot application
+     *<p>
+     * Displays a welcome message, processes user input in a loop,
+     * and executes command until the exit command is issued
+     * </p>
+     */
     public void run() {
         ui.showWelcome();
         ui.showLine();
@@ -45,7 +60,12 @@ public class Remy {
         }
     }
 
-    public static void main(String[] args) throws InvalidArgumentException {
+    /**
+     * Entry point of the chatbot application
+     *
+     * @param args command line arguments (not in use)
+     */
+    public static void main(String[] args) {
         new Remy("./data/remy.txt").run();
     }
 }
