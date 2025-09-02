@@ -5,6 +5,10 @@ import remy.exception.InvalidArgumentException;
 import remy.exception.InvalidCommandException;
 import remy.exception.InvalidDateFormatException;
 import remy.exception.RemyException;
+import remy.task.DeadlineTask;
+import remy.task.EventTask;
+import remy.task.Task;
+import remy.task.TodoTask;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -43,9 +47,16 @@ public class Parser {
     }
 
     public static Command parseCommand(String userInput) throws RemyException {
-        String[] commandSplit = userInput.split(" ", 2);
-        String command = commandSplit[0];
-        String argument = commandSplit.length > 1 ? commandSplit[1] : "";
+        String command;
+        String argument;
+        try {
+            String[] commandSplit = userInput.split(" ", 2);
+            command = commandSplit[0];
+            argument = commandSplit.length > 1 ? commandSplit[1] : "";
+        } catch (Exception e) {
+            throw new InvalidCommandException("Invalid command: command not found");
+        }
+
         try {
             Commands cmd = Commands.valueOf(command.toUpperCase());
             switch (cmd) {
@@ -153,6 +164,46 @@ public class Parser {
             }
         } catch (Exception e) {
             throw new RemyException(e.getMessage());
+        }
+    }
+
+    public static Task parseTask(String data) throws RemyException {
+        String taskType;
+        String isDoneStr;
+        String taskInfo;
+        String title;
+        int isDone;
+
+        try {
+            String[] taskTypeSplit = data.split("\\|", 2);
+            taskType = taskTypeSplit[0].trim();
+            String[] isDoneSplit = taskTypeSplit[1].split("\\|", 2);
+            isDoneStr = isDoneSplit[0].trim();
+            taskInfo = isDoneSplit[1].trim();
+        } catch (Exception e) {
+            throw new RemyException("Invalid data parsed from hard disk");
+        }
+        switch (taskType) {
+        case "T":
+            isDone = Integer.parseInt(isDoneStr);
+            title = taskInfo;
+            return new TodoTask(title, isDone != 0);
+        case "D":
+            isDone = Integer.parseInt(isDoneStr);
+            String[] titleSplit = taskInfo.split("\\|", 2);
+            title = titleSplit[0].trim();
+            String ddl = titleSplit[1].trim();
+            return new DeadlineTask(title, Parser.parseDateTime(ddl), isDone != 0);
+        case "E":
+            isDone = Integer.parseInt(isDoneStr);
+            String[] fromSplit = taskInfo.split("\\|", 2);
+            title = fromSplit[0].trim();
+            String [] toSplit = fromSplit[1].split("\\|", 2);
+            String from = toSplit[0].trim();
+            String to = toSplit[1].trim();
+            return new EventTask(title, Parser.parseDateTime(from), Parser.parseDateTime(to), isDone != 0);
+        default:
+            throw new InvalidArgumentException("Invalid string input");
         }
     }
 

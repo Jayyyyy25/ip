@@ -30,7 +30,7 @@ public class EditCommand extends Command {
                 System.out.println("\t\t\tError updating remy.task completeness: " + e.getMessage());
             }
             ui.showUnmark(tasks, this.taskInd);
-        } else {
+        } else { // else statement is used and do not consider value other than 0 and 1 is because EditCommand constructor only called internally
             tasks.markAsDone(this.taskInd);
             try {
                 storage.updateLine(taskInd, tasks.getTaskString(this.taskInd));

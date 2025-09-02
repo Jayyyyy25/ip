@@ -12,6 +12,10 @@ import java.util.List;
 public class Storage {
     private Path filePath;
 
+    public Storage() {
+        this.filePath = Path.of("./data/remy.txt");
+    }
+
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
         createFile();
