@@ -2,6 +2,7 @@ package remy.command;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.*;
 
 import remy.task.TaskList;
 import remy.util.Storage;
@@ -20,6 +21,11 @@ public class ListCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        tasks.getListing(specifiedDate);
+        List<String> list = tasks.getListing(specifiedDate, "");
+        if (specifiedDate == null) {
+            ui.showListing(list, 0);
+        } else {
+            ui.showListing(list, 1);
+        }
     }
 }

@@ -62,7 +62,7 @@ public class TaskListTest {
         java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
         System.setOut(new java.io.PrintStream(out));
 
-        tasks.getListing(LocalDate.of(2025, 9, 1));
+        tasks.getListing(LocalDate.of(2025, 9, 1), "");
         String output = out.toString();
 
         assertTrue(output.contains("Here are the tasks on the specified date."));

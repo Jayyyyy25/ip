@@ -3,7 +3,7 @@ package remy.util;
 import remy.task.Task;
 import remy.task.TaskList;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Ui {
     private String name;
@@ -58,5 +58,50 @@ public class Ui {
 
     public void showBye() {
         System.out.println("\t\t\tBye! Hope to see you soon!");
+    }
+
+    /**
+     * Displays a formatted list of tasks to the user based on the listing type.
+     * If the list is empty, an appropriate "no tasks" message is shown instead of task entries.
+     *
+     * @param list the list of task descriptions to display
+     * @param listingType an integer indicating the type of listing:
+     *                    0 for all tasks, 1 for tasks on a specific date, 2 for tasks matching a keyword
+     */
+    public void showListing(List<String> list, int listingType) {
+        if (listingType == 0) {
+            if (list.isEmpty()) {
+                System.out.println("\t\t\tYou have no tasks in the list at this moment.");
+            } else {
+                System.out.println("\t\t\tHere are the tasks in the list:");
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+                int ind = i + 1;
+                System.out.println("\t\t\t" + ind + "." + list.get(i));
+            }
+        } else if (listingType == 1) {
+            if (list.isEmpty()) {
+                System.out.println("\t\t\tYou have no tasks in the list at this specified date.");
+            } else {
+                System.out.println("\t\t\tHere are the tasks on the specified date:");
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+                int ind = i + 1;
+                System.out.println("\t\t\t" + ind + "." + list.get(i));
+            }
+        } else if (listingType == 2) {
+            if (list.isEmpty()) {
+                System.out.println("\t\t\tYou have no tasks in the list at this keyword.");
+            } else {
+                System.out.println("\t\t\tHere are the matching tasks in your lists:");
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+                int ind = i + 1;
+                System.out.println("\t\t\t" + ind + "." + list.get(i));
+            }
+        }
     }
 }

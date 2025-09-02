@@ -27,34 +27,24 @@ public class TaskList {
         }
     }
 
-    public void getListing(LocalDate specifiedDate) {
-        if (specifiedDate == null) {
-            if (tasks.isEmpty()) {
-                System.out.println("\t\t\tYou have no tasks in the list at this moment.");
-            } else {
-                System.out.println("\t\t\tHere are the tasks in the list.");
-            }
-
-            for (int i = 0; i < tasks.size(); i++) {
-                int ind = i + 1;
-                System.out.println("\t\t\t" + ind + "." + tasks.get(i).getStatus());
-            }
-        } else {
-            List<Task> taskOnDate = tasks.stream()
-                    .filter(task -> task.isCovered(specifiedDate))
+    public List<String> getListing(LocalDate specifiedDate, String keyword) {
+        List<String> list;
+        if (specifiedDate == null && keyword.isEmpty()) {
+            list = tasks.stream()
+                    .map(Task::getStatus)
                     .toList();
-
-            if (taskOnDate.isEmpty()) {
-                System.out.println("\t\t\tYou have no tasks in the list at this specified date.");
-            } else {
-                System.out.println("\t\t\tHere are the tasks on the specified date.");
-            }
-
-            for (int i = 0; i < taskOnDate.size(); i++) {
-                int ind = i + 1;
-                System.out.println("\t\t\t" + ind + "." + taskOnDate.get(i).getStatus());
-            }
+        } else if (specifiedDate != null) {
+            list = tasks.stream()
+                    .filter(task -> task.isCovered(specifiedDate))
+                    .map(Task::getStatus)
+                    .toList();
+        } else {
+            list = tasks.stream()
+                    .filter(task -> task.toString().toLowerCase().contains(keyword))
+                    .map(Task::getStatus)
+                    .toList();
         }
+        return list;
     }
 
     public int getSize() {
