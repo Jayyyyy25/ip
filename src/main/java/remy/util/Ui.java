@@ -10,7 +10,7 @@ public class Ui {
     private static Scanner scanner = new Scanner(System.in);
 
     public Ui() {
-        this.name = "remy.ui.Remy";
+        this.name = "Remy";
     }
 
     public void showWelcome() {
@@ -31,7 +31,7 @@ public class Ui {
     }
 
     public void showError(String errMessage) {
-        System.out.println("\t\t\tError: " + errMessage);
+        System.out.println("\t\t\t" + errMessage);
     }
 
     public void showDeleted(TaskList tasks, Task task) {

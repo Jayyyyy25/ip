@@ -81,13 +81,13 @@ public class Parser {
                     }
                     return new ListCommand(date);
                 } else {
-                    throw new InvalidCommandException(String.format("Invalid comment error: 'list %s' remy.command not found", argument));
+                    throw new InvalidCommandException(String.format("Invalid comment error: 'list %s' command not found", argument));
                 }
             case TODO:
                 if (!argument.isEmpty()) {
                     return new AddCommand(argument);
                 } else {
-                    throw new InvalidArgumentException("Newly added remy.task could not have blank title.");
+                    throw new InvalidArgumentException("Newly added task could not have blank title.");
                 }
             case DEADLINE:
                 if (!argument.isEmpty()) {
@@ -95,7 +95,7 @@ public class Parser {
                         String[] titleSplit = argument.split("/by", 2);
                         String title = titleSplit[0].trim();
                         if (title.isEmpty()) {
-                            throw new InvalidArgumentException("Newly added remy.task could not have blank title.");
+                            throw new InvalidArgumentException("Newly added task could not have blank title.");
                         }
                         String ddlStr = titleSplit[1].trim();
                         if (ddlStr.isEmpty()) {
@@ -111,16 +111,16 @@ public class Parser {
                         return new AddCommand(title, ddl);
                     }
                 } else {
-                    throw new InvalidArgumentException("Newly added remy.task could not have blank title.");
+                    throw new InvalidArgumentException("Newly added task could not have blank title.");
                 }
             case EVENT:
                 if (argument.isEmpty()) {
-                    throw new InvalidArgumentException("Newly added remy.task could not have blank description.");
+                    throw new InvalidArgumentException("Newly added task could not have blank description.");
                 } else if (argument.contains("/from") && argument.contains("/to")) {
                     String[] fromSplit = argument.split("/from", 2);
                     String title = fromSplit[0].trim();
                     if (title.isEmpty()) {
-                        throw new InvalidArgumentException("Newly added remy.task could not have blank title.");
+                        throw new InvalidArgumentException("Newly added task could not have blank title.");
                     }
                     String[] toSplit = fromSplit[1].split("/to", 2);
                     String fromStr = toSplit[0].trim();
@@ -160,10 +160,12 @@ public class Parser {
                     throw new InvalidArgumentException("Please provide a valid index to remove the remy.task.");
                 }
             default:
-                throw new InvalidCommandException(String.format("Invalid remy.command error: '%s' remy.command not found", command));
+                throw new InvalidCommandException(String.format("Invalid command error: '%s' command not found", command));
             }
+        } catch (RemyException e) {
+            throw e;
         } catch (Exception e) {
-            throw new RemyException(e.getMessage());
+            throw new InvalidCommandException(String.format("Invalid command error: '%s' command not found", command));
         }
     }
 

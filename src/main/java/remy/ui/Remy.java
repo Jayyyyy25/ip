@@ -35,8 +35,10 @@ public class Remy {
                 Command c = Parser.parseCommand(userInput);
                 c.execute(tasks, ui, storage);
                 isRunning = c.isRunning();
-            } catch (Exception e) {
+            } catch (RemyException e) {
                 ui.showError(e.getMessage());
+            } catch (Exception e) {
+                ui.showError("Unexpected Error: " + e.getMessage());
             } finally {
                 ui.showLine();
             }
