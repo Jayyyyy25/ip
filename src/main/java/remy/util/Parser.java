@@ -52,7 +52,7 @@ public class Parser {
 
     // Internal enumerations of valid commands
     private enum Commands {
-        BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE
+        BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, FIND
     }
 
     /**
@@ -174,6 +174,12 @@ public class Parser {
                     return new DeleteCommand(Integer.parseInt(argument) - 1);
                 } else {
                     throw new InvalidArgumentException("Please provide a valid index to remove the remy.task.");
+                }
+            case FIND:
+                if (!argument.isEmpty()) {
+                    return new FindCommand(argument.toLowerCase());
+                } else {
+                    throw new InvalidArgumentException("Please provide a keyword to search");
                 }
             default:
                 throw new InvalidCommandException(String.format("Invalid command error: '%s' command not found", command));
