@@ -68,15 +68,17 @@ public class EditCommandTest {
         int taskInd = -1;
 
         @Override
-        public void showMark(TaskList tasks, int taskInd) {
+        public String showMark(TaskList tasks, int taskInd) {
             markWasCalled = true;
             this.taskInd = taskInd;
+            return "";
         }
 
         @Override
-        public void showUnmark(TaskList tasks, int taskInd) {
+        public String showUnmark(TaskList tasks, int taskInd) {
             unmarkWasCalled = true;
             this.taskInd = taskInd;
+            return "";
         }
     }
 

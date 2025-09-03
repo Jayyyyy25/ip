@@ -36,8 +36,9 @@ public class ExitCommandTest {
         boolean exitWasCalled = false;
 
         @Override
-        public void showBye() {
+        public String showBye() {
             exitWasCalled = true;
+            return "";
         }
     }
 

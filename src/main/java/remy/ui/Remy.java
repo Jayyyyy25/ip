@@ -1,12 +1,8 @@
 package remy.ui;
 
 import remy.command.Command;
-
-import remy.exception.InvalidArgumentException;
 import remy.exception.RemyException;
-
 import remy.task.TaskList;
-
 import remy.util.Parser;
 import remy.util.Storage;
 import remy.util.Ui;
@@ -15,9 +11,9 @@ import remy.util.Ui;
  * Main class for running the Remy chatbot application
  */
 public class Remy {
-    private Ui ui;
+    private final Ui ui;
     private TaskList tasks;
-    private Storage storage;
+    private final Storage storage;
 
     /**
      * Constructs a new {@code Remy} instance with the given file path for persistent storage
@@ -35,40 +31,18 @@ public class Remy {
         }
     }
 
-    /**
-     * Starts the Remy chatbot application
-     *<p>
-     * Displays a welcome message, processes user input in a loop,
-     * and executes command until the exit command is issued
-     * </p>
-     */
-    public void run() {
-        ui.showWelcome();
-        ui.showLine();
-        boolean isRunning = true;
-        while (isRunning) {
-            try {
-                String userInput = ui.readComment();
-                ui.showLine();
-                Command c = Parser.parseCommand(userInput);
-                c.execute(tasks, ui, storage);
-                isRunning = c.isRunning();
-            } catch (RemyException e) {
-                ui.showError(e.getMessage());
-            } catch (Exception e) {
-                ui.showError("Unexpected Error: " + e.getMessage());
-            } finally {
-                ui.showLine();
-            }
-        }
+    public String getWelcome() {
+        return ui.showWelcome();
     }
 
-    /**
-     * Entry point of the chatbot application
-     *
-     * @param args command line arguments (not in use)
-     */
-    public static void main(String[] args) {
-        new Remy("./data/remy.txt").run();
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parseCommand(input);
+            return c.execute(tasks, ui, storage);
+        } catch (RemyException e) {
+            return e.getMessage();
+        } catch (Exception e) {
+            return "Unexpected Error: " + e.getMessage();
+        }
     }
 }

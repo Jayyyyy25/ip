@@ -21,12 +21,12 @@ public class ListCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         List<String> list = tasks.getListing(specifiedDate, "");
         if (specifiedDate == null) {
-            ui.showListing(list, 0);
+            return ui.showListing(list, 0);
         } else {
-            ui.showListing(list, 1);
+            return ui.showListing(list, 1);
         }
     }
 }
