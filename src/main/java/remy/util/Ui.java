@@ -1,17 +1,18 @@
 package remy.util;
 
+import java.util.List;
+import java.util.Scanner;
+
 import remy.task.Task;
 import remy.task.TaskList;
-
-import java.util.*;
 
 /**
  * Handles all user interactions such as displaying messages,
  * reading input, and showing feedback when tasks are modified.
  */
 public class Ui {
-    private String name;
     private static Scanner scanner = new Scanner(System.in);
+    private String name;
 
     public Ui() {
         this.name = "Remy";
@@ -20,23 +21,15 @@ public class Ui {
     /**
      * Prints welcome message when program is started
      */
-    public void showWelcome() {
-        System.out.println("\t\t\tHello! I'm " + name + ".\n" + "\t\t\tWhat can I do for you?");
+    public String showWelcome() {
+        return "Hello! I'm " + name + ".\n" + "What can I do for you?";
     }
 
     /**
      * Prints error message when failed to fetch data from hard disk
      */
-    public void showLoadingError() {
-        System.out.println("\t\t\t(Failed to fetch hard disk record");
-    }
-
-    /**
-     * Prints divider line
-     */
-    public void showLine() {
-        String divider = "----------------------------------------";
-        System.out.println(divider);
+    public String showLoadingError() {
+        return "Failed to fetch hard disk record";
     }
 
     /**
@@ -51,8 +44,8 @@ public class Ui {
     /**
      * Prints error message
      */
-    public void showError(String errMessage) {
-        System.out.println("\t\t\t" + errMessage);
+    public String showError(String errMessage) {
+        return errMessage;
     }
 
     /**
@@ -62,10 +55,9 @@ public class Ui {
      * @param tasks the current TaskList, used to get the updated task count
      * @param task the deleted task, used to display its task status
      */
-    public void showDeleted(TaskList tasks, Task task) {
-        System.out.println("\t\t\tNoted. I've removed this remy.task.");
-        System.out.println("\t\t\t\t" + task.getStatus());
-        System.out.println("\t\t\tNow you have " + tasks.getSize() + " tasks in the list.");
+    public String showDeleted(TaskList tasks, Task task) {
+        return "Noted. I've removed this remy.task.\n" + task.getStatus()
+                + "\nNow you have " + tasks.getSize() + " tasks in the list.";
     }
 
     /**
@@ -75,10 +67,9 @@ public class Ui {
      * @param tasks the current TaskList, used to get the updated task count
      * @param taskInd the added task, used to display its task status
      */
-    public void showAdded(TaskList tasks, int taskInd) {
-        System.out.println("\t\t\tGot it. I've added this remy.task:");
-        System.out.println("\t\t\t\t" + tasks.getTaskStatus(taskInd));
-        System.out.println("\t\t\tNow you have " + tasks.getSize() + " tasks in the list.");
+    public String showAdded(TaskList tasks, int taskInd) {
+        return "Got it. I've added this remy.task:" + tasks.getTaskStatus(taskInd)
+                + "\nNow you have " + tasks.getSize() + " tasks in the list.";
     }
 
     /**
@@ -88,9 +79,8 @@ public class Ui {
      * @param tasks the current TaskList, used to get the updated task count
      * @param taskInd the task marked as done, used to display its task status
      */
-    public void showMark(TaskList tasks, int taskInd) {
-        System.out.println("\t\t\tNice, I've marked this remy.task as done:");
-        System.out.println("\t\t\t" + tasks.getTaskStatus(taskInd));
+    public String showMark(TaskList tasks, int taskInd) {
+        return "Nice, I've marked this remy.task as done:\n" + tasks.getTaskStatus(taskInd);
     }
 
     /**
@@ -100,16 +90,15 @@ public class Ui {
      * @param tasks the current TaskList, used to get the updated task count
      * @param taskInd the task unmarked as done, used to display its task status
      */
-    public void showUnmark(TaskList tasks, int taskInd) {
-        System.out.println("\t\t\tOK! I've marked this remy.task as not done yet:");
-        System.out.println("\t\t\t" + tasks.getTaskStatus(taskInd));
+    public String showUnmark(TaskList tasks, int taskInd) {
+        return "OK! I've marked this remy.task as not done yet:\n" + tasks.getTaskStatus(taskInd);
     }
 
     /**
      * Prints farewell message when program is exiting
      */
-    public void showBye() {
-        System.out.println("\t\t\tBye! Hope to see you soon!");
+    public String showBye() {
+        return "Bye! Hope to see you soon!";
     }
 
     /**
@@ -120,40 +109,44 @@ public class Ui {
      * @param listingType an integer indicating the type of listing:
      *                    0 for all tasks, 1 for tasks on a specific date, 2 for tasks matching a keyword
      */
-    public void showListing(List<String> list, int listingType) {
+    public String showListing(List<String> list, int listingType) {
+        StringBuilder response;
         if (listingType == 0) {
             if (list.isEmpty()) {
-                System.out.println("\t\t\tYou have no tasks in the list at this moment.");
+                response = new StringBuilder("You have no tasks in the list at this moment.\n");
             } else {
-                System.out.println("\t\t\tHere are the tasks in the list:");
+                response = new StringBuilder("Here are the tasks in the list:\n");
             }
 
             for (int i = 0; i < list.size(); i++) {
                 int ind = i + 1;
-                System.out.println("\t\t\t" + ind + "." + list.get(i));
+                response.append(ind).append(".").append(list.get(i)).append("\n");
             }
         } else if (listingType == 1) {
             if (list.isEmpty()) {
-                System.out.println("\t\t\tYou have no tasks in the list at this specified date.");
+                response = new StringBuilder("You have no tasks in the list at this specified date.\n");
             } else {
-                System.out.println("\t\t\tHere are the tasks on the specified date:");
+                response = new StringBuilder("Here are the tasks on the specified date:\n");
             }
 
             for (int i = 0; i < list.size(); i++) {
                 int ind = i + 1;
-                System.out.println("\t\t\t" + ind + "." + list.get(i));
+                response.append(ind).append(".").append(list.get(i)).append("\n");
             }
         } else if (listingType == 2) {
             if (list.isEmpty()) {
-                System.out.println("\t\t\tYou have no tasks in the list at this keyword.");
+                response = new StringBuilder("You have no tasks in the list at this keyword.\n");
             } else {
-                System.out.println("\t\t\tHere are the matching tasks in your lists:");
+                response = new StringBuilder("Here are the matching tasks in your lists:\n");
             }
 
             for (int i = 0; i < list.size(); i++) {
                 int ind = i + 1;
-                System.out.println("\t\t\t" + ind + "." + list.get(i));
+                response.append(ind).append(".").append(list.get(i)).append("\n");
             }
+        } else {
+            response = new StringBuilder();
         }
+        return response.toString();
     }
 }

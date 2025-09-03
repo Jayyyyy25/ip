@@ -20,7 +20,7 @@ public class EditCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws RemyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws RemyException {
         if (taskInd >= tasks.getSize()) {
             throw new InvalidArgumentException("Please provide a valid index to mark a remy.task.");
         }
@@ -32,7 +32,7 @@ public class EditCommand extends Command {
             } catch (IOException e) {
                 System.out.println("\t\t\tError updating remy.task completeness: " + e.getMessage());
             }
-            ui.showUnmark(tasks, taskInd);
+            return ui.showUnmark(tasks, taskInd);
         } else { // else statement is used and do not consider value other than 0 and 1 is because EditCommand constructor only called internally
             tasks.markAsDone(taskInd);
             try {
@@ -40,7 +40,7 @@ public class EditCommand extends Command {
             } catch (IOException e) {
                 System.out.println("\t\t\tError updating remy.task completeness: " + e.getMessage());
             }
-            ui.showMark(tasks, taskInd);
+            return ui.showMark(tasks, taskInd);
         }
     }
 }

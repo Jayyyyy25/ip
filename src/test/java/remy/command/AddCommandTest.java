@@ -71,9 +71,10 @@ public class AddCommandTest {
         int lastIndex = -1;
 
         @Override
-        public void showAdded(TaskList tasks, int taskInd) {
+        public String showAdded(TaskList tasks, int taskInd) {
             addedWasCalled = true;
             lastIndex = taskInd;
+            return "";
         }
     }
 

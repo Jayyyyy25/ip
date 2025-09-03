@@ -16,13 +16,13 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.deleteItem(ind);
         try {
             storage.deleteLine(ind);
         } catch (IOException e) {
             System.out.println("\t\t\tError deleting remy.task: " + e.getMessage());
         }
-        ui.showDeleted(tasks, task);
+        return ui.showDeleted(tasks, task);
     }
 }

@@ -25,9 +25,10 @@ public abstract class Command {
      * @param tasks   the task list for saving, loading and operating on tasks
      * @param ui      the user interface for displaying messages
      * @param storage the storage to update task data
+     * @return response from the Remy
      * @throws RemyException if an error occurs during execution
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws RemyException;
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws RemyException;
 
     /**
      * Returns whether the application should continue running after this command executes.

@@ -41,7 +41,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task task;
         if (deadline == null && from == null && to == null) {
             task = new TodoTask(title);
@@ -58,6 +58,6 @@ public class AddCommand extends Command {
             System.out.println("\t\t\tError adding new remy.task: " + e.getMessage());
         }
 
-        ui.showAdded(tasks, taskInd);
+        return ui.showAdded(tasks, taskInd);
     }
 }

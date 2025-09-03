@@ -44,9 +44,10 @@ public class DeleteCommandTest {
         int lastIndex = -1;
 
         @Override
-        public void showDeleted(TaskList tasks, Task task) {
+        public String showDeleted(TaskList tasks, Task task) {
             deletedWasCalled = true;
             lastIndex = -1;
+            return "";
         }
     }
 
