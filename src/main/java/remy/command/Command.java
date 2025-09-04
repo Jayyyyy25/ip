@@ -29,14 +29,4 @@ public abstract class Command {
      * @throws RemyException if an error occurs during execution
      */
     public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws RemyException;
-
-    /**
-     * Returns whether the application should continue running after this command executes.
-     *
-     * <p>By default, commands do not stop the application, so this method returns {@code true}.
-     * Subclasses like {@code ExitCommand} can override this to return {@code false}.</p>
-     */
-    public boolean isRunning() {
-        return true;
-    }
 }

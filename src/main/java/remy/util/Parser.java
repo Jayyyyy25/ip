@@ -1,6 +1,19 @@
 package remy.util;
 
-import remy.command.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
+import java.util.List;
+
+import remy.command.AddCommand;
+import remy.command.Command;
+import remy.command.DeleteCommand;
+import remy.command.EditCommand;
+import remy.command.ExitCommand;
+import remy.command.FindCommand;
+import remy.command.ListCommand;
 import remy.exception.InvalidArgumentException;
 import remy.exception.InvalidCommandException;
 import remy.exception.InvalidDateFormatException;
@@ -9,13 +22,6 @@ import remy.task.DeadlineTask;
 import remy.task.EventTask;
 import remy.task.Task;
 import remy.task.TodoTask;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Handles parsing the user input into executable {@link Command} objects,
@@ -92,12 +98,13 @@ public class Parser {
                     try {
                         date = Parser.parseDateTime(dateStr).toLocalDate();
                     } catch (Exception e) {
-                        throw new InvalidDateFormatException(e.getMessage() +
-                                "\n\t\t\tPlease use a valid date format (DD/MM/YYYY HH:MM) to specify date");
+                        throw new InvalidDateFormatException(e.getMessage()
+                                + "\n\t\t\tPlease use a valid date format (DD/MM/YYYY HH:MM) to specify date");
                     }
                     return new ListCommand(date);
                 } else {
-                    throw new InvalidCommandException(String.format("Invalid comment error: 'list %s' command not found", argument));
+                    throw new InvalidCommandException(String.format(
+                            "Invalid comment error: 'list %s' command not found", argument));
                 }
             case TODO:
                 if (!argument.isEmpty()) {
@@ -115,17 +122,19 @@ public class Parser {
                         }
                         String ddlStr = titleSplit[1].trim();
                         if (ddlStr.isEmpty()) {
-                            throw new InvalidArgumentException("Please use /by to specify a deadline for deadline remy.task.");
+                            throw new InvalidArgumentException(
+                                    "Please use /by to specify a deadline for deadline task.");
                         }
                         LocalDateTime ddl;
                         try {
                             ddl = Parser.parseDateTime(ddlStr);
                         } catch (Exception e) {
-                            throw new InvalidDateFormatException(e.getMessage() +
-                                    "\n\t\t\tPlease use a valid date format (DD/MM/YYYY HH:MM) to specify deadline");
+                            throw new InvalidDateFormatException(e.getMessage()
+                                    + "\nPlease use a valid date format (DD/MM/YYYY HH:MM) to specify deadline");
                         }
                         return new AddCommand(title, ddl);
                     }
+                    throw new InvalidArgumentException("Please use /by to specify a deadline for deadline task");
                 } else {
                     throw new InvalidArgumentException("Newly added task could not have blank title.");
                 }
@@ -142,7 +151,8 @@ public class Parser {
                     String fromStr = toSplit[0].trim();
                     String toStr = toSplit[1].trim();
                     if (fromStr.isEmpty() || toStr.isEmpty()) {
-                        throw new InvalidArgumentException("Please use /from and /to to specify a date / time for event remy.task.");
+                        throw new InvalidArgumentException(
+                                "Please use /from and /to to specify a date / time for event remy.task.");
                     }
                     LocalDateTime from;
                     LocalDateTime to;
@@ -150,12 +160,13 @@ public class Parser {
                         from = Parser.parseDateTime(fromStr);
                         to = Parser.parseDateTime(toStr);
                     } catch (Exception e) {
-                        throw new InvalidDateFormatException(e.getMessage() +
-                                "\n\t\t\tPlease use a valid date format (DD/MM/YYYY HH:MM) to specify time");
+                        throw new InvalidDateFormatException(e.getMessage()
+                                + "\nPlease use a valid date format (DD/MM/YYYY HH:MM) to specify time");
                     }
                     return new AddCommand(title, from, to);
                 } else {
-                    throw new InvalidArgumentException("Please use /from and /to to specify a date / time for event remy.task.");
+                    throw new InvalidArgumentException(
+                            "Please use /from and /to to specify a date / time for event remy.task.");
                 }
             case MARK:
                 if (!argument.isEmpty() && canParseInt(argument)) {
@@ -182,7 +193,8 @@ public class Parser {
                     throw new InvalidArgumentException("Please provide a keyword to search");
                 }
             default:
-                throw new InvalidCommandException(String.format("Invalid command error: '%s' command not found", command));
+                throw new InvalidCommandException(String.format(
+                        "Invalid command error: '%s' command not found", command));
             }
         } catch (RemyException e) {
             throw e;
@@ -245,7 +257,8 @@ public class Parser {
      * @return a {@link LocalDateTime} object
      * @throws IllegalArgumentException if date/time string is not formatted well
      */
-    public static LocalDateTime parseDateTime(String input) {
+    @SuppressWarnings("checkstyle:WhitespaceAround")
+    public static LocalDateTime parseDateTime(String input) throws InvalidArgumentException {
         for (DateTimeFormatter formatter : DATE_FORMATS) {
             try {
                 if (formatter.toString().contains("H")) {
@@ -253,7 +266,9 @@ public class Parser {
                 } else {
                     return LocalDate.parse(input, formatter).atStartOfDay();
                 }
-            } catch (DateTimeParseException ignored) {}
+            } catch (DateTimeParseException ignored) {
+                continue;
+            }
         }
         throw new IllegalArgumentException("Unparseable date: " + input);
     }

@@ -56,7 +56,7 @@ public class Ui {
      * @param task the deleted task, used to display its task status
      */
     public String showDeleted(TaskList tasks, Task task) {
-        return "Noted. I've removed this remy.task.\n" + task.getStatus()
+        return "Noted. I've removed this remy.task.\n\t" + task.getStatus()
                 + "\nNow you have " + tasks.getSize() + " tasks in the list.";
     }
 
@@ -68,7 +68,7 @@ public class Ui {
      * @param taskInd the added task, used to display its task status
      */
     public String showAdded(TaskList tasks, int taskInd) {
-        return "Got it. I've added this remy.task:" + tasks.getTaskStatus(taskInd)
+        return "Got it. I've added this remy.task:\n\t" + tasks.getTaskStatus(taskInd)
                 + "\nNow you have " + tasks.getSize() + " tasks in the list.";
     }
 
@@ -80,7 +80,7 @@ public class Ui {
      * @param taskInd the task marked as done, used to display its task status
      */
     public String showMark(TaskList tasks, int taskInd) {
-        return "Nice, I've marked this remy.task as done:\n" + tasks.getTaskStatus(taskInd);
+        return "Nice, I've marked this remy.task as done:\n\t" + tasks.getTaskStatus(taskInd);
     }
 
     /**
@@ -91,7 +91,7 @@ public class Ui {
      * @param taskInd the task unmarked as done, used to display its task status
      */
     public String showUnmark(TaskList tasks, int taskInd) {
-        return "OK! I've marked this remy.task as not done yet:\n" + tasks.getTaskStatus(taskInd);
+        return "OK! I've marked this remy.task as not done yet:\n\t" + tasks.getTaskStatus(taskInd);
     }
 
     /**
@@ -120,7 +120,7 @@ public class Ui {
 
             for (int i = 0; i < list.size(); i++) {
                 int ind = i + 1;
-                response.append(ind).append(".").append(list.get(i)).append("\n");
+                response.append("\t").append(ind).append(".").append(list.get(i)).append("\n");
             }
         } else if (listingType == 1) {
             if (list.isEmpty()) {
@@ -131,7 +131,7 @@ public class Ui {
 
             for (int i = 0; i < list.size(); i++) {
                 int ind = i + 1;
-                response.append(ind).append(".").append(list.get(i)).append("\n");
+                response.append("\t").append(ind).append(".").append(list.get(i)).append("\n");
             }
         } else if (listingType == 2) {
             if (list.isEmpty()) {
@@ -142,7 +142,7 @@ public class Ui {
 
             for (int i = 0; i < list.size(); i++) {
                 int ind = i + 1;
-                response.append(ind).append(".").append(list.get(i)).append("\n");
+                response.append("\t").append(ind).append(".").append(list.get(i)).append("\n");
             }
         } else {
             response = new StringBuilder();

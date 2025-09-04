@@ -61,12 +61,16 @@ class ParserTest {
 
     @Test
     void testParseDateTimeValid() {
-        LocalDateTime dt = Parser.parseDateTime("2025-09-01 12:00");
-        assertEquals(2025, dt.getYear());
-        assertEquals(9, dt.getMonthValue());
-        assertEquals(1, dt.getDayOfMonth());
-        assertEquals(12, dt.getHour());
-        assertEquals(0, dt.getMinute());
+        try {
+            LocalDateTime dt = Parser.parseDateTime("2025-09-01 12:00");
+            assertEquals(2025, dt.getYear());
+            assertEquals(9, dt.getMonthValue());
+            assertEquals(1, dt.getDayOfMonth());
+            assertEquals(12, dt.getHour());
+            assertEquals(0, dt.getMinute());
+        } catch (RemyException e) {
+            fail();
+        }
     }
 
     @Test

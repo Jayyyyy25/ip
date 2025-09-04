@@ -1,13 +1,8 @@
 D | 1 | asgn 1 | Aug 29 2025 23:59
 E | 1 | club bonding | Aug 31 2025 20:00 | Aug 31 2025 22:00
-D | 0 | techjam submission | Aug 31 2025 09:00
-E | 0 | hackathon sprint | Aug 28 2025 09:00 | Aug 31 2025 09:00
+D | 1 | techjam submission | Aug 31 2025 09:00
+E | 1 | hackathon sprint | Aug 28 2025 09:00 | Aug 31 2025 09:00
 D | 0 | homework | Sep 16 2025 23:59
 E | 0 | Meeting | Sep 01 2025 15:00 | Sep 01 2025 16:00
 D | 0 | Submit report | Sep 01 2025 23:59
-T | 0 | Reading
-T | 0 | Reading
-T | 0 | Reading
-T | 0 | Reading
-D | 0 | Assignment | Sep 01 2025 23:59
-T | 0 | Reading
+D | 0 | asgn 2 | Sep 01 2025 00:00

@@ -1,14 +1,15 @@
 package remy.command;
 
 import java.time.LocalDate;
-
 import java.util.List;
 
 import remy.task.TaskList;
-
 import remy.util.Storage;
 import remy.util.Ui;
 
+/**
+ * Subclass of {@code Command} that list out all tasks in the list
+ */
 public class ListCommand extends Command {
     private LocalDate specifiedDate;
 

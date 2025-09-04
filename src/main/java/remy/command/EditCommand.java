@@ -2,18 +2,25 @@ package remy.command;
 
 import java.io.IOException;
 
+import remy.exception.InvalidArgumentException;
+import remy.exception.RemyException;
 import remy.task.TaskList;
-
 import remy.util.Storage;
 import remy.util.Ui;
 
-import remy.exception.InvalidArgumentException;
-import remy.exception.RemyException;
-
+/**
+ * Subclass of {@code Command} that edit a status of a current task in the list
+ */
 public class EditCommand extends Command {
     private int editType; // 0 for unmark, 1 for mark
     private int taskInd;
 
+    /**
+     * Constructor for a edit command by providing edit type and index of task to be edited
+     *
+     * @param type edit type of the command, where 0 indicates unmark a task as done, 1 indicates mark a task as done
+     * @param ind index of the task to be edited
+     */
     public EditCommand(int type, int ind) {
         this.editType = type;
         this.taskInd = ind;
