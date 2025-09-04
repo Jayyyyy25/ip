@@ -21,42 +21,26 @@ public class AddCommand extends Command {
     private LocalDateTime to;
 
     /**
-     * Constructor for add command to todo task
+     * Constructor for add task command, by using Varargs to differentiate which task type is added
      *
-     * @param title
+     * @param title title of the task
+     * @param dates use number of dates inputted to differentiate type of date inputted
      */
-    public AddCommand(String title) {
+    public AddCommand(String title, LocalDateTime ... dates) {
         this.title = title;
-        this.deadline = null;
-        this.from = null;
-        this.to = null;
-    }
-
-    /**
-     * Constructor for add command to deadline task
-     *
-     * @param title
-     * @param deadline
-     */
-    public AddCommand(String title, LocalDateTime deadline) {
-        this.title = title;
-        this.deadline = deadline;
-        this.from = null;
-        this.to = null;
-    }
-
-    /**
-     * Constructor for add comment to event task
-     *
-     * @param title
-     * @param from
-     * @param to
-     */
-    public AddCommand(String title, LocalDateTime from, LocalDateTime to) {
-        this.title = title;
-        this.deadline = null;
-        this.from = from;
-        this.to = to;
+        if (dates.length == 2) {
+            this.from = dates[0];
+            this.to = dates[1];
+            this.deadline = null;
+        } else if (dates.length == 1) {
+            this.from = null;
+            this.to = null;
+            this.deadline = dates[0];
+        } else {
+            this.from = null;
+            this.to = null;
+            this.deadline = null;
+        }
     }
 
     @Override
