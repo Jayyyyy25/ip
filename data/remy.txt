@@ -1,6 +1,5 @@
-D | 1 | asgn 1 | Aug 29 2025 23:59
 D | 1 | techjam submission | Aug 31 2025 09:00
 D | 0 | homework | Sep 16 2025 23:59
 E | 0 | Meeting | Sep 01 2025 15:00 | Sep 01 2025 16:00
-D | 0 | Submit report | Sep 01 2025 23:59
-T | 1 | screenshot gui
+D | 1 | Submit report | Sep 01 2025 23:59
+D | 0 | asgn 2 | Sep 01 2025 00:00

@@ -3,6 +3,7 @@ package remy.task;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import remy.exception.InvalidArgumentException;
 import remy.exception.RemyException;
@@ -49,22 +50,17 @@ public class TaskList {
      */
     public List<String> getListing(LocalDate specifiedDate, String keyword) {
         List<String> list;
+        Predicate<Task> predicate;
+
         if (specifiedDate == null && keyword.isEmpty()) {
-            list = tasks.stream()
-                    .map(Task::getStatus)
-                    .toList();
+            predicate = task -> true;
         } else if (specifiedDate != null) {
-            list = tasks.stream()
-                    .filter(task -> task.isCovered(specifiedDate))
-                    .map(Task::getStatus)
-                    .toList();
+            predicate = task -> task.isCovered(specifiedDate);
         } else {
-            list = tasks.stream()
-                    .filter(task -> task.toString().toLowerCase().contains(keyword))
-                    .map(Task::getStatus)
-                    .toList();
+            predicate = task -> task.toString().toLowerCase().contains(keyword);
         }
-        return list;
+
+        return tasks.stream().filter(predicate).map(Task::getStatus).toList();
     }
 
     /**

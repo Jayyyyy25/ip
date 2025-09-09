@@ -69,15 +69,10 @@ public class Parser {
      * @throws RemyException if the command is invalid or arguments are missing
      */
     public static Command parseCommand(String userInput) throws RemyException {
-        String command;
-        String argument;
-        try {
-            String[] commandSplit = userInput.split(" ", 2);
-            command = commandSplit[0];
-            argument = commandSplit.length > 1 ? commandSplit[1] : "";
-        } catch (Exception e) {
-            throw new InvalidCommandException("Invalid command: command not found");
-        }
+        // Parse user input into command and argument
+        String[] commandSplit = userInput.split(" ", 2);
+        String command = commandSplit[0].trim();
+        String argument = commandSplit.length > 1 ? commandSplit[1].trim() : "";
 
         try {
             Commands cmd = Commands.valueOf(command.toUpperCase());
@@ -85,89 +80,13 @@ public class Parser {
             case BYE:
                 return new ExitCommand();
             case LIST:
-                if (argument.isEmpty()) {
-                    return new ListCommand();
-                } else if (argument.contains("/on")) {
-                    String[] argumentSplit = argument.split("/on", 2);
-                    String dateStr = argumentSplit[1].trim();
-                    if (dateStr.isEmpty()) {
-                        throw new InvalidArgumentException(
-                                "Please use /by to specify a date for specific date listing.");
-                    }
-                    LocalDate date;
-                    try {
-                        date = Parser.parseDateTime(dateStr).toLocalDate();
-                    } catch (Exception e) {
-                        throw new InvalidDateFormatException(e.getMessage()
-                                + "\n\t\t\tPlease use a valid date format (DD/MM/YYYY HH:MM) to specify date");
-                    }
-                    return new ListCommand(date);
-                } else {
-                    throw new InvalidCommandException(String.format(
-                            "Invalid comment error: 'list %s' command not found", argument));
-                }
+                return parseListCommand(argument);
             case TODO:
-                if (!argument.isEmpty()) {
-                    return new AddCommand(argument);
-                } else {
-                    throw new InvalidArgumentException("Newly added task could not have blank title.");
-                }
+                return parseTodoTask(argument);
             case DEADLINE:
-                if (!argument.isEmpty()) {
-                    if (argument.contains("/by")) {
-                        String[] titleSplit = argument.split("/by", 2);
-                        String title = titleSplit[0].trim();
-                        if (title.isEmpty()) {
-                            throw new InvalidArgumentException("Newly added task could not have blank title.");
-                        }
-                        String ddlStr = titleSplit[1].trim();
-                        if (ddlStr.isEmpty()) {
-                            throw new InvalidArgumentException(
-                                    "Please use /by to specify a deadline for deadline task.");
-                        }
-                        LocalDateTime ddl;
-                        try {
-                            ddl = Parser.parseDateTime(ddlStr);
-                        } catch (Exception e) {
-                            throw new InvalidDateFormatException(e.getMessage()
-                                    + "\nPlease use a valid date format (DD/MM/YYYY HH:MM) to specify deadline");
-                        }
-                        return new AddCommand(title, ddl);
-                    }
-                    throw new InvalidArgumentException("Please use /by to specify a deadline for deadline task");
-                } else {
-                    throw new InvalidArgumentException("Newly added task could not have blank title.");
-                }
+                return parseDeadlineTask(argument);
             case EVENT:
-                if (argument.isEmpty()) {
-                    throw new InvalidArgumentException("Newly added task could not have blank description.");
-                } else if (argument.contains("/from") && argument.contains("/to")) {
-                    String[] fromSplit = argument.split("/from", 2);
-                    String title = fromSplit[0].trim();
-                    if (title.isEmpty()) {
-                        throw new InvalidArgumentException("Newly added task could not have blank title.");
-                    }
-                    String[] toSplit = fromSplit[1].split("/to", 2);
-                    String fromStr = toSplit[0].trim();
-                    String toStr = toSplit[1].trim();
-                    if (fromStr.isEmpty() || toStr.isEmpty()) {
-                        throw new InvalidArgumentException(
-                                "Please use /from and /to to specify a date / time for event remy.task.");
-                    }
-                    LocalDateTime from;
-                    LocalDateTime to;
-                    try {
-                        from = Parser.parseDateTime(fromStr);
-                        to = Parser.parseDateTime(toStr);
-                    } catch (Exception e) {
-                        throw new InvalidDateFormatException(e.getMessage()
-                                + "\nPlease use a valid date format (DD/MM/YYYY HH:MM) to specify time");
-                    }
-                    return new AddCommand(title, from, to);
-                } else {
-                    throw new InvalidArgumentException(
-                            "Please use /from and /to to specify a date / time for event remy.task.");
-                }
+                return parseEventTask(argument);
             case MARK:
                 if (!argument.isEmpty() && canParseInt(argument)) {
                     return new EditCommand(1, Integer.parseInt(argument) - 1);
@@ -193,7 +112,6 @@ public class Parser {
                     throw new InvalidArgumentException("Please provide a keyword to search");
                 }
             default:
-                assert false : "Invalid command error: '%s' command not found" + command;
                 throw new InvalidCommandException(String.format(
                         "Invalid command error: '%s' command not found", command));
             }
@@ -205,6 +123,125 @@ public class Parser {
     }
 
     /**
+     * Parse a list command arguments into an executable command
+     *
+     * @param argument Argument given by the user
+     * @return A {@code ListCommand}
+     */
+    private static Command parseListCommand(String argument) throws RemyException {
+        if (argument.isEmpty()) {
+            return new ListCommand();
+        } else if (argument.contains("/on")) {
+            String[] argumentSplit = argument.split("/on", 2);
+            String dateStr = argumentSplit[1].trim();
+            if (dateStr.isEmpty()) {
+                throw new InvalidArgumentException(
+                        "Please use /on to specify a date for specific date listing.");
+            }
+            LocalDate date;
+            try {
+                date = Parser.parseDateTime(dateStr).toLocalDate();
+            } catch (Exception e) {
+                throw new InvalidDateFormatException(e.getMessage()
+                        + "Please use a valid date format (DD/MM/YYYY HH:MM) to specify date");
+            }
+            return new ListCommand(date);
+        } else {
+            throw new InvalidCommandException(String.format(
+                    "Invalid comment error: 'list %s' command not found", argument));
+        }
+    }
+
+    /**
+     * Parse a TodoTask command argument into an executable command
+     *
+     * @param argument Arguments such as title
+     * @return A {@code AddCommand}
+     */
+    private static Command parseTodoTask(String argument) throws RemyException {
+        if (!argument.isEmpty()) {
+            return new AddCommand(argument);
+        } else {
+            throw new InvalidArgumentException("Newly added task could not have blank title.");
+        }
+    }
+
+    /**
+     * Parse a DeadlineTask command argument into an executable command
+     *
+     * @param argument Arguments such as title and deadline
+     * @return A {@code AddCommand}
+     */
+    private static Command parseDeadlineTask(String argument) throws RemyException {
+        if (argument.isEmpty()) {
+            throw new InvalidArgumentException("Newly added task could not have blank title");
+        }
+
+        if (!argument.contains("/by")) {
+            throw new InvalidArgumentException("Please use /by to specify a deadline for deadline task");
+        }
+
+        String[] titleSplit = argument.split("/by", 2);
+        String title = titleSplit[0].trim();
+        if (title.isEmpty()) {
+            throw new InvalidArgumentException("Newly added task could not have blank title.");
+        }
+        String ddlStr = titleSplit[1].trim();
+        if (ddlStr.isEmpty()) {
+            throw new InvalidArgumentException(
+                    "Please use /by to specify a deadline for deadline task.");
+        }
+        LocalDateTime ddl;
+        try {
+            ddl = Parser.parseDateTime(ddlStr);
+        } catch (Exception e) {
+            throw new InvalidDateFormatException(e.getMessage()
+                    + "\nPlease use a valid date format (DD/MM/YYYY HH:MM) to specify deadline");
+        }
+        return new AddCommand(title, ddl);
+    }
+
+    /**
+     * Parse a EventTask command argument into an executable command
+     *
+     * @param argument Arguments such as title, event start date, event end date
+     * @return A {@code AddCommand}
+     */
+    private static Command parseEventTask(String argument) throws RemyException {
+        if (argument.isEmpty()) {
+            throw new InvalidArgumentException("Newly added task could not have blank description.");
+        }
+
+        if (!argument.contains("/from") || !argument.contains("/to")) {
+            throw new InvalidArgumentException(
+                    "Please use /from and /to to specify a date / time for event task.");
+        }
+
+        String[] fromSplit = argument.split("/from", 2);
+        String title = fromSplit[0].trim();
+        if (title.isEmpty()) {
+            throw new InvalidArgumentException("Newly added task could not have blank title.");
+        }
+        String[] toSplit = fromSplit[1].split("/to", 2);
+        String fromStr = toSplit[0].trim();
+        String toStr = toSplit[1].trim();
+        if (fromStr.isEmpty() || toStr.isEmpty()) {
+            throw new InvalidArgumentException(
+                    "Please use /from and /to to specify a date / time for event remy.task.");
+        }
+        LocalDateTime from;
+        LocalDateTime to;
+        try {
+            from = Parser.parseDateTime(fromStr);
+            to = Parser.parseDateTime(toStr);
+        } catch (Exception e) {
+            throw new InvalidDateFormatException(e.getMessage()
+                    + "\nPlease use a valid date format (DD/MM/YYYY HH:MM) to specify time");
+        }
+        return new AddCommand(title, from, to);
+    }
+
+    /**
      * Parses a line of stored task data into a {@link Task} object
      *
      * @param data task data stored in text
@@ -212,43 +249,34 @@ public class Parser {
      * @throws RemyException if the data is invalid or improperly formatted
      */
     public static Task parseTask(String data) throws RemyException {
-        String taskType;
-        String isDoneStr;
-        String taskInfo;
-        String title;
-        int isDone;
-
         try {
-            String[] taskTypeSplit = data.split("\\|", 2);
-            taskType = taskTypeSplit[0].trim();
-            String[] isDoneSplit = taskTypeSplit[1].split("\\|", 2);
-            isDoneStr = isDoneSplit[0].trim();
-            taskInfo = isDoneSplit[1].trim();
+            String[] taskString = data.split("\\|", 3);
+            String taskType = taskString[0].trim();
+            String isDoneStr = taskString[1].trim();
+            int isDone = Integer.parseInt(isDoneStr);
+            String taskInfo = taskString[2].trim();
+            String title;
+
+            switch (taskType) {
+            case "T":
+                title = taskInfo;
+                return new TodoTask(title, isDone != 0);
+            case "D":
+                String[] titleSplit = taskInfo.split("\\|", 2);
+                title = titleSplit[0].trim();
+                String ddl = titleSplit[1].trim();
+                return new DeadlineTask(title, Parser.parseDateTime(ddl), isDone != 0);
+            case "E":
+                String[] taskInfoSplit = taskInfo.split("\\|", 3);
+                title = taskInfoSplit[0].trim();
+                String from = taskInfoSplit[1].trim();
+                String to = taskInfoSplit[2].trim();
+                return new EventTask(title, Parser.parseDateTime(from), Parser.parseDateTime(to), isDone != 0);
+            default:
+                throw new InvalidArgumentException("Invalid string input");
+            }
         } catch (Exception e) {
             throw new RemyException("Invalid data parsed from hard disk");
-        }
-        switch (taskType) {
-        case "T":
-            isDone = Integer.parseInt(isDoneStr);
-            title = taskInfo;
-            return new TodoTask(title, isDone != 0);
-        case "D":
-            isDone = Integer.parseInt(isDoneStr);
-            String[] titleSplit = taskInfo.split("\\|", 2);
-            title = titleSplit[0].trim();
-            String ddl = titleSplit[1].trim();
-            return new DeadlineTask(title, Parser.parseDateTime(ddl), isDone != 0);
-        case "E":
-            isDone = Integer.parseInt(isDoneStr);
-            String[] fromSplit = taskInfo.split("\\|", 2);
-            title = fromSplit[0].trim();
-            String [] toSplit = fromSplit[1].split("\\|", 2);
-            String from = toSplit[0].trim();
-            String to = toSplit[1].trim();
-            return new EventTask(title, Parser.parseDateTime(from), Parser.parseDateTime(to), isDone != 0);
-        default:
-            assert false : "Unreachable kind: this task type is invalid";
-            throw new InvalidArgumentException("Invalid string input");
         }
     }
 
