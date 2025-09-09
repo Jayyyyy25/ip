@@ -42,7 +42,7 @@ public class EditCommand extends Command {
             }
 
             return ui.showUnmark(tasks, taskIdx);
-        } else { // else statement is used and do not consider value other than 0 and 1 is because EditCommand constructor only called internally
+        } else if (editType == 1) {
             tasks.markAsDone(taskIdx);
 
             try {
@@ -52,6 +52,9 @@ public class EditCommand extends Command {
             }
 
             return ui.showMark(tasks, taskIdx);
+        } else {
+            assert false : "Invalid edit type";
+            return "";
         }
     }
 }
