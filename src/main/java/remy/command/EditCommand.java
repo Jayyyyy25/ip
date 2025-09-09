@@ -40,7 +40,7 @@ public class EditCommand extends Command {
                 System.out.println("\t\t\tError updating remy.task completeness: " + e.getMessage());
             }
             return ui.showUnmark(tasks, taskInd);
-        } else { // else statement is used and do not consider value other than 0 and 1 is because EditCommand constructor only called internally
+        } else if (editType == 1) {
             tasks.markAsDone(taskInd);
             try {
                 storage.updateLine(taskInd, tasks.getTaskString(taskInd));
@@ -48,6 +48,9 @@ public class EditCommand extends Command {
                 System.out.println("\t\t\tError updating remy.task completeness: " + e.getMessage());
             }
             return ui.showMark(tasks, taskInd);
+        } else {
+            assert false : "Invalid edit type";
+            return "";
         }
     }
 }

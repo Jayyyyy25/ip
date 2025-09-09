@@ -193,6 +193,7 @@ public class Parser {
                     throw new InvalidArgumentException("Please provide a keyword to search");
                 }
             default:
+                assert false : "Invalid command error: '%s' command not found" + command;
                 throw new InvalidCommandException(String.format(
                         "Invalid command error: '%s' command not found", command));
             }
@@ -246,6 +247,7 @@ public class Parser {
             String to = toSplit[1].trim();
             return new EventTask(title, Parser.parseDateTime(from), Parser.parseDateTime(to), isDone != 0);
         default:
+            assert false : "Unreachable kind: this task type is invalid";
             throw new InvalidArgumentException("Invalid string input");
         }
     }
@@ -257,7 +259,6 @@ public class Parser {
      * @return a {@link LocalDateTime} object
      * @throws IllegalArgumentException if date/time string is not formatted well
      */
-    @SuppressWarnings("checkstyle:WhitespaceAround")
     public static LocalDateTime parseDateTime(String input) throws InvalidArgumentException {
         for (DateTimeFormatter formatter : DATE_FORMATS) {
             try {
