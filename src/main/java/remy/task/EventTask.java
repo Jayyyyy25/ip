@@ -12,12 +12,27 @@ public class EventTask extends Task {
     protected LocalDateTime from;
     protected LocalDateTime to;
 
+    /**
+     * Constructor for Event Task, to create a task with start and end date time value
+     *
+     * @param title Title of task
+     * @param from Start time of event
+     * @param to End time of event
+     */
     public EventTask(String title, LocalDateTime from, LocalDateTime to) {
         super(title);
         this.from = from;
         this.to = to;
     }
 
+    /**
+     * Constructor for Event Task, to create a task with start and end date time value
+     *
+     * @param title Title of task
+     * @param from Start time of event
+     * @param to End time of event
+     * @param isDone Boolean value on whether the task is done
+     */
     public EventTask(String title, LocalDateTime from, LocalDateTime to, boolean isDone) {
         super(title, isDone);
         this.from = from;

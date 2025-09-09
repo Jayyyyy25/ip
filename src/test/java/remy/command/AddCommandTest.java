@@ -1,18 +1,17 @@
 package remy.command;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import remy.task.TaskList;
-
-import remy.util.Storage;
-import remy.util.Ui;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import remy.task.TaskList;
+import remy.util.Storage;
+import remy.util.Ui;
 
 public class AddCommandTest {
     private TaskList tasks;
@@ -67,8 +66,8 @@ public class AddCommandTest {
     // --------- Mock dependencies ---------
 
     static class MockUi extends Ui {
-        boolean addedWasCalled = false;
-        int lastIndex = -1;
+        private boolean addedWasCalled = false;
+        private int lastIndex = -1;
 
         @Override
         public String showAdded(TaskList tasks, int taskInd) {
@@ -79,7 +78,7 @@ public class AddCommandTest {
     }
 
     static class MockStorage extends Storage {
-        String lastAppendedLine = null;
+        private String lastAppendedLine = null;
 
         @Override
         public void appendLine(String line) {

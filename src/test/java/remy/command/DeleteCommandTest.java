@@ -1,16 +1,15 @@
 package remy.command;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import remy.task.Task;
 import remy.task.TaskList;
-
 import remy.util.Storage;
 import remy.util.Ui;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DeleteCommandTest {
     private TaskList tasks;
@@ -40,8 +39,8 @@ public class DeleteCommandTest {
     // --------- Mock dependencies ---------
 
     static class MockUi extends Ui {
-        boolean deletedWasCalled = false;
-        int lastIndex = -1;
+        private boolean deletedWasCalled = false;
+        private int lastIndex = -1;
 
         @Override
         public String showDeleted(TaskList tasks, Task task) {
@@ -52,7 +51,7 @@ public class DeleteCommandTest {
     }
 
     static class MockStorage extends Storage {
-        String lastAppendedLine = null;
+        private String lastAppendedLine = null;
 
         @Override
         public void deleteLine(int line) {

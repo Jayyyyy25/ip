@@ -1,23 +1,22 @@
 package remy.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-
-import java.io.IOException;
-
-import java.nio.file.Path;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class StorageTest {
 
     @TempDir
     Path tempDir;
 
-    Storage storage;
+    private Storage storage;
 
     @BeforeEach
     void setUp() {

@@ -1,20 +1,21 @@
 package remy.util;
 
-import org.junit.jupiter.api.Test;
-
-import remy.command.Command;
-import remy.command.AddCommand;
-
-import remy.exception.RemyException;
-
-import remy.task.EventTask;
-import remy.task.Task;
-import remy.task.TodoTask;
-import remy.task.DeadlineTask;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import remy.command.AddCommand;
+import remy.command.Command;
+import remy.exception.RemyException;
+import remy.task.DeadlineTask;
+import remy.task.EventTask;
+import remy.task.Task;
+import remy.task.TodoTask;
 
 class ParserTest {
 

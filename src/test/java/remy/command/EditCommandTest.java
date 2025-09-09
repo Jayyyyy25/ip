@@ -1,18 +1,16 @@
 package remy.command;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import remy.exception.RemyException;
-
 import remy.task.TaskList;
-
 import remy.util.Storage;
 import remy.util.Ui;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class EditCommandTest {
     private TaskList tasks;
@@ -53,7 +51,7 @@ public class EditCommandTest {
     }
 
     @Test
-    void testExecuteMarkTest_InvalidIndex_fail() throws RemyException {
+    void testExecuteMarkTest_invalidIndex_fail() throws RemyException {
         AddCommand addCmd = new AddCommand("Reading");
         addCmd.execute(tasks, ui, storage);
         EditCommand editCmd = new EditCommand(1, 1);
@@ -63,9 +61,9 @@ public class EditCommandTest {
     // --------- Mock dependencies ---------
 
     static class MockUi extends Ui {
-        boolean markWasCalled = false;
-        boolean unmarkWasCalled = false;
-        int taskInd = -1;
+        private boolean markWasCalled = false;
+        private boolean unmarkWasCalled = false;
+        private int taskInd = -1;
 
         @Override
         public String showMark(TaskList tasks, int taskInd) {
@@ -83,7 +81,7 @@ public class EditCommandTest {
     }
 
     static class MockStorage extends Storage {
-        String lastUpdatedLine = null;
+        private String lastUpdatedLine = null;
 
         @Override
         public void updateLine(int lineNumber, String line) {

@@ -1,17 +1,16 @@
 package remy.command;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import remy.task.TaskList;
-
-import remy.util.Storage;
-import remy.util.Ui;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import remy.task.TaskList;
+import remy.util.Storage;
+import remy.util.Ui;
 
 public class ListCommandTest {
     private TaskList tasks;

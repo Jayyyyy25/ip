@@ -3,7 +3,6 @@ package remy.util;
 import java.util.List;
 import java.util.Scanner;
 
-import remy.exception.RemyException;
 import remy.task.Task;
 import remy.task.TaskList;
 

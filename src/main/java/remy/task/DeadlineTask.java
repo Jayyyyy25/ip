@@ -11,11 +11,24 @@ import java.time.format.DateTimeFormatter;
 public class DeadlineTask extends Task {
     protected LocalDateTime by;
 
+    /**
+     * Constructor for Deadline Task, to create a task with deadline
+     *
+     * @param title Title of task
+     * @param by Deadline of the task
+     */
     public DeadlineTask(String title, LocalDateTime by) {
         super(title);
         this.by = by;
     }
 
+    /**
+     * Constructor for Deadline Task, to create a task with deadline
+     *
+     * @param title Title of task
+     * @param by Deadline of the task
+     * @param isDone Boolean value on whether the task is done, false as default
+     */
     public DeadlineTask(String title, LocalDateTime by, boolean isDone) {
         super(title, isDone);
         this.by = by;

@@ -1,14 +1,13 @@
 package remy.command;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import remy.task.TaskList;
-
 import remy.util.Storage;
 import remy.util.Ui;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExitCommandTest {
     private TaskList tasks;
