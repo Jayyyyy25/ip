@@ -59,7 +59,7 @@ public class EventTask extends Task {
      */
     @Override
     public boolean isCovered(LocalDate date) {
-        return from.toLocalDate().equals(date) || to.toLocalDate().equals(date) ||
-                (from.toLocalDate().isBefore(date) && to.toLocalDate().isAfter(date));
+        return from.toLocalDate().equals(date) || to.toLocalDate().equals(date) || (
+                from.toLocalDate().isBefore(date) && to.toLocalDate().isAfter(date));
     }
 }

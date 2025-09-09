@@ -1,14 +1,12 @@
 package remy.task;
 
-import remy.exception.InvalidArgumentException;
-import remy.exception.RemyException;
-
-import remy.util.Parser;
-
 import java.time.LocalDate;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import remy.exception.InvalidArgumentException;
+import remy.exception.RemyException;
+import remy.util.Parser;
 
 /**
  * Represents a list of tasks. Provides methods to add, delete, mark/unmark tasks,
@@ -83,7 +81,7 @@ public class TaskList {
      * @return the deleted task
      */
     public Task deleteItem(int ind) {
-        Task task  = tasks.get(ind);
+        Task task = tasks.get(ind);
         tasks.remove(task);
         return task;
     }

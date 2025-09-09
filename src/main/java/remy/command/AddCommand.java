@@ -43,6 +43,7 @@ public class AddCommand extends Command {
         }
     }
 
+    @SuppressWarnings("checkstyle:Regexp")
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task task;
@@ -54,6 +55,7 @@ public class AddCommand extends Command {
             task = new EventTask(title, from, to);
         }
         int taskIdx = tasks.addItem(task);
+        assert taskIdx <= tasks.getSize() : "Invalid task index returned";
 
         try {
             storage.appendLine(task.toString());
