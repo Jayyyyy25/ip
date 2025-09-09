@@ -3,6 +3,7 @@ package remy.util;
 import java.util.List;
 import java.util.Scanner;
 
+import remy.exception.RemyException;
 import remy.task.Task;
 import remy.task.TaskList;
 
@@ -117,21 +118,11 @@ public class Ui {
             } else {
                 response = new StringBuilder("Here are the tasks in the list:\n");
             }
-
-            for (int i = 0; i < list.size(); i++) {
-                int ind = i + 1;
-                response.append("\t").append(ind).append(".").append(list.get(i)).append("\n");
-            }
         } else if (listingType == 1) {
             if (list.isEmpty()) {
                 response = new StringBuilder("You have no tasks in the list at this specified date.\n");
             } else {
                 response = new StringBuilder("Here are the tasks on the specified date:\n");
-            }
-
-            for (int i = 0; i < list.size(); i++) {
-                int ind = i + 1;
-                response.append("\t").append(ind).append(".").append(list.get(i)).append("\n");
             }
         } else if (listingType == 2) {
             if (list.isEmpty()) {
@@ -139,13 +130,13 @@ public class Ui {
             } else {
                 response = new StringBuilder("Here are the matching tasks in your lists:\n");
             }
-
-            for (int i = 0; i < list.size(); i++) {
-                int ind = i + 1;
-                response.append("\t").append(ind).append(".").append(list.get(i)).append("\n");
-            }
         } else {
+            assert false : "Unreachable kind: listing type will not have a value other than 0, 1 and 2.";
             response = new StringBuilder();
+        }
+        for (int i = 0; i < list.size(); i++) {
+            int ind = i + 1;
+            response.append("\t").append(ind).append(".").append(list.get(i)).append("\n");
         }
         return response.toString();
     }

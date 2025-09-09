@@ -55,11 +55,13 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getRemyDialog(response, remyImage)
         );
+
         if (input.trim().equals("bye")) {
             PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
             delay.setOnFinished(event -> Platform.exit());
             delay.play();
         }
+
         userInput.clear();
     }
 }
