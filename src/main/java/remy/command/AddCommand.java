@@ -17,8 +17,8 @@ import remy.util.Ui;
 public class AddCommand extends Command {
     private String title;
     private LocalDateTime deadline;
-    private LocalDateTime from;
-    private LocalDateTime to;
+    private LocalDateTime eventStartTime;
+    private LocalDateTime eventEndTime;
 
     /**
      * Constructor for add task command, by using Varargs to differentiate which task type is added
@@ -29,29 +29,31 @@ public class AddCommand extends Command {
     public AddCommand(String title, LocalDateTime ... dates) {
         this.title = title;
         if (dates.length == 2) {
-            this.from = dates[0];
-            this.to = dates[1];
+            this.eventStartTime = dates[0];
+            this.eventEndTime = dates[1];
             this.deadline = null;
         } else if (dates.length == 1) {
-            this.from = null;
-            this.to = null;
+            this.eventStartTime = null;
+            this.eventEndTime = null;
             this.deadline = dates[0];
-        } else {
-            this.from = null;
-            this.to = null;
+        } else if (dates.length == 0) {
+            this.eventStartTime = null;
+            this.eventEndTime = null;
             this.deadline = null;
+        } else {
+            assert false : "Invalid argument for add command";
         }
     }
 
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task task;
-        if (deadline == null && from == null && to == null) {
+        if (deadline == null && eventStartTime == null && eventEndTime == null) {
             task = new TodoTask(title);
         } else if (deadline != null) {
             task = new DeadlineTask(title, deadline);
         } else {
-            task = new EventTask(title, from, to);
+            task = new EventTask(title, eventStartTime, eventEndTime);
         }
         int taskIdx = tasks.addItem(task);
 

@@ -20,11 +20,13 @@ public class DeleteCommand extends Command {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.deleteItem(ind);
+
         try {
             storage.deleteLine(ind);
         } catch (IOException e) {
             System.out.println("\t\t\tError deleting remy.task: " + e.getMessage());
         }
+
         return ui.showDeleted(tasks, task);
     }
 }

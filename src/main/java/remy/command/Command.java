@@ -1,9 +1,7 @@
 package remy.command;
 
 import remy.exception.RemyException;
-
 import remy.task.TaskList;
-
 import remy.util.Storage;
 import remy.util.Ui;
 
@@ -13,9 +11,6 @@ import remy.util.Ui;
  * <p>All concrete commands (subclasses) must implement the {@link #execute(TaskList, Ui, Storage)}
  * method to define their specific behavior. Commands are executed by the {@code Remy} application
  * when a user inputs a corresponding instruction.</p>
- *
- * <p>The {@link #isRunning()} method can be overridden by commands that intend to stop the program,
- * such as an exit command. By default, it returns {@code true}.</p>
  */
 public abstract class Command {
 

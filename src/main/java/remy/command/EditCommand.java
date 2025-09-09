@@ -13,41 +13,45 @@ import remy.util.Ui;
  */
 public class EditCommand extends Command {
     private int editType; // 0 for unmark, 1 for mark
-    private int taskInd;
+    private int taskIdx;
 
     /**
-     * Constructor for a edit command by providing edit type and index of task to be edited
+     * Constructor for an edit command by providing edit type and index of task to be edited
      *
      * @param type edit type of the command, where 0 indicates unmark a task as done, 1 indicates mark a task as done
      * @param ind index of the task to be edited
      */
     public EditCommand(int type, int ind) {
         this.editType = type;
-        this.taskInd = ind;
+        this.taskIdx = ind;
     }
 
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws RemyException {
-        if (taskInd >= tasks.getSize()) {
+        if (taskIdx >= tasks.getSize()) {
             throw new InvalidArgumentException("Please provide a valid index to mark a remy.task.");
         }
 
         if (editType == 0) {
-            tasks.markAsUndone(taskInd);
+            tasks.markAsUndone(taskIdx);
+
             try {
-                storage.updateLine(taskInd, tasks.getTaskString(taskInd));
+                storage.updateLine(taskIdx, tasks.getTaskString(taskIdx));
             } catch (IOException e) {
                 System.out.println("\t\t\tError updating remy.task completeness: " + e.getMessage());
             }
-            return ui.showUnmark(tasks, taskInd);
+
+            return ui.showUnmark(tasks, taskIdx);
         } else { // else statement is used and do not consider value other than 0 and 1 is because EditCommand constructor only called internally
-            tasks.markAsDone(taskInd);
+            tasks.markAsDone(taskIdx);
+
             try {
-                storage.updateLine(taskInd, tasks.getTaskString(taskInd));
+                storage.updateLine(taskIdx, tasks.getTaskString(taskIdx));
             } catch (IOException e) {
                 System.out.println("\t\t\tError updating remy.task completeness: " + e.getMessage());
             }
-            return ui.showMark(tasks, taskInd);
+
+            return ui.showMark(tasks, taskIdx);
         }
     }
 }
