@@ -45,6 +45,8 @@ public class TaskList {
      * Prints the tasks in the list. If a date is specified, only tasks
      * that are covered by that date are printed.
      *
+     * Apply streams to handle tasks listing, do filtering and mapping on those tasks
+     *
      * @param specifiedDate date to filter tasks by; if null, all tasks are printed
      */
     public List<String> getListing(LocalDate specifiedDate, String keyword) {
