@@ -61,13 +61,8 @@ public class TaskListTest {
                 LocalDateTime.parse("2025/09/01 23:59", DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
         tasks.addItem(datedTask);
 
-        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
-        System.setOut(new java.io.PrintStream(out));
+        String output = tasks.getListing(LocalDate.of(2025, 9, 1), "").get(0);
 
-        tasks.getListing(LocalDate.of(2025, 9, 1), "");
-        String output = out.toString();
-
-        assertTrue(output.contains("Here are the tasks on the specified date."));
         assertTrue(output.contains("assignment"));
     }
 }

@@ -39,7 +39,8 @@ public class AddCommandTest {
 
     @Test
     void testExecuteAddsDeadlineTask() {
-        LocalDateTime deadline = LocalDateTime.parse("2025/09/01 23:59", DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
+        LocalDateTime deadline = LocalDateTime.parse("2025/09/01 23:59",
+                DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
         AddCommand cmd = new AddCommand("Submit report", deadline);
         cmd.execute(tasks, ui, storage);
 

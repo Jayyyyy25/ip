@@ -32,7 +32,7 @@ public class ExitCommandTest {
     // --------- Mock dependencies ---------
 
     static class MockUi extends Ui {
-        boolean exitWasCalled = false;
+        private boolean exitWasCalled = false;
 
         @Override
         public String showBye() {

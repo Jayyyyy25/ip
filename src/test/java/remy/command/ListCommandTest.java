@@ -28,14 +28,9 @@ public class ListCommandTest {
     void testExecuteListing() {
         AddCommand addCmd = new AddCommand("Reading");
         addCmd.execute(tasks, ui, storage);
-        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
-        System.setOut(new java.io.PrintStream(out));
 
         ListCommand listCmd = new ListCommand(null);
-        listCmd.execute(tasks, ui, storage);
-
-        System.setOut(System.out);
-        String output = out.toString();
+        String output = listCmd.execute(tasks, ui, storage);
 
         assertTrue(output.contains(tasks.getTaskStatus(0)));
     }
@@ -45,28 +40,17 @@ public class ListCommandTest {
         LocalDateTime date = LocalDateTime.parse("2025/09/01 23:59", DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
         AddCommand addCmd = new AddCommand("Assignment", date);
         addCmd.execute(tasks, ui, storage);
-        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
-        System.setOut(new java.io.PrintStream(out));
 
         ListCommand listCmd = new ListCommand(date.toLocalDate());
-        listCmd.execute(tasks, ui, storage);
-
-        System.setOut(System.out);
-        String output = out.toString();
+        String output = listCmd.execute(tasks, ui, storage);
 
         assertTrue(output.contains(tasks.getTaskStatus(0)));
     }
 
     @Test
     void testExecuteListingNoTasks() {
-        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
-        System.setOut(new java.io.PrintStream(out));
-
         ListCommand listCmd = new ListCommand(null);
-        listCmd.execute(tasks, ui, storage);
-
-        System.setOut(System.out);
-        String output = out.toString();
+        String output = listCmd.execute(tasks, ui, storage);
 
         assertTrue(output.contains("You have no tasks in the list at this moment."));
     }
