@@ -3,6 +3,7 @@ package remy.util;
 import java.util.List;
 import java.util.Scanner;
 
+import remy.command.ListCommand;
 import remy.task.Task;
 import remy.task.TaskList;
 
@@ -21,8 +22,9 @@ public class Ui {
     /**
      * Prints welcome message when program is started
      */
-    public String showWelcome() {
-        return "Hello! I'm " + name + ".\n" + "What can I do for you?";
+    public String showWelcome(TaskList tasks, Ui ui, Storage storage) {
+        String recentTasks = new ListCommand(2).execute(tasks, ui, storage);
+        return "Hello! I'm " + name + ".\n" + recentTasks + "\nWhat can I do for you?";
     }
 
     /**
@@ -107,7 +109,8 @@ public class Ui {
      *
      * @param list the list of task descriptions to display
      * @param listingType an integer indicating the type of listing:
-     *                    0 for all tasks, 1 for tasks on a specific date, 2 for tasks matching a keyword
+     *                    0 for all tasks, 1 for tasks on a specific date,
+     *                    2 for recent tasks, 3 for tasks matching a keyword
      */
     public String showListing(List<String> list, int listingType) {
         StringBuilder response;
@@ -124,6 +127,12 @@ public class Ui {
                 response = new StringBuilder("Here are the tasks on the specified date:\n");
             }
         } else if (listingType == 2) {
+            if (list.isEmpty()) {
+                response = new StringBuilder("You have no tasks in the list on recent days\n");
+            } else {
+                response = new StringBuilder("Here are your recent tasks:\n");
+            }
+        } else if (listingType == 3) {
             if (list.isEmpty()) {
                 response = new StringBuilder("You have no tasks in the list at this keyword.\n");
             } else {

@@ -29,7 +29,7 @@ public class ListCommandTest {
         AddCommand addCmd = new AddCommand("Reading");
         addCmd.execute(tasks, ui, storage);
 
-        ListCommand listCmd = new ListCommand(null);
+        ListCommand listCmd = new ListCommand(0);
         String output = listCmd.execute(tasks, ui, storage);
 
         assertTrue(output.contains(tasks.getTaskStatus(0)));
@@ -41,7 +41,7 @@ public class ListCommandTest {
         AddCommand addCmd = new AddCommand("Assignment", date);
         addCmd.execute(tasks, ui, storage);
 
-        ListCommand listCmd = new ListCommand(date.toLocalDate());
+        ListCommand listCmd = new ListCommand(1, date.toLocalDate());
         String output = listCmd.execute(tasks, ui, storage);
 
         assertTrue(output.contains(tasks.getTaskStatus(0)));
@@ -49,7 +49,7 @@ public class ListCommandTest {
 
     @Test
     void testExecuteListingNoTasks() {
-        ListCommand listCmd = new ListCommand(null);
+        ListCommand listCmd = new ListCommand(0);
         String output = listCmd.execute(tasks, ui, storage);
 
         assertTrue(output.contains("You have no tasks in the list at this moment."));

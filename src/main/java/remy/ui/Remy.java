@@ -32,7 +32,7 @@ public class Remy {
     }
 
     public String getWelcome() {
-        return ui.showWelcome();
+        return ui.showWelcome(tasks, ui, storage);
     }
 
     public String getResponse(String input) {
