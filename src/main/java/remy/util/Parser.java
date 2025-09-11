@@ -130,7 +130,7 @@ public class Parser {
      */
     private static Command parseListCommand(String argument) throws RemyException {
         if (argument.isEmpty()) {
-            return new ListCommand();
+            return new ListCommand(0);
         } else if (argument.contains("/on")) {
             String[] argumentSplit = argument.split("/on", 2);
             String dateStr = argumentSplit[1].trim();
@@ -145,7 +145,9 @@ public class Parser {
                 throw new InvalidDateFormatException(e.getMessage()
                         + "Please use a valid date format (DD/MM/YYYY HH:MM) to specify date");
             }
-            return new ListCommand(date);
+            return new ListCommand(1, date);
+        } else if (argument.contains("/recent")) {
+            return new ListCommand(2);
         } else {
             throw new InvalidCommandException(String.format(
                     "Invalid comment error: 'list %s' command not found", argument));

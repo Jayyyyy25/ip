@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.*;
 
 import remy.exception.InvalidArgumentException;
 import remy.exception.RemyException;
@@ -49,7 +50,6 @@ public class TaskList {
      * @param specifiedDate date to filter tasks by; if null, all tasks are printed
      */
     public List<String> getListing(LocalDate specifiedDate, String keyword) {
-        List<String> list;
         Predicate<Task> predicate;
 
         if (specifiedDate == null && keyword.isEmpty()) {
@@ -60,7 +60,7 @@ public class TaskList {
             predicate = task -> task.toString().toLowerCase().contains(keyword);
         }
 
-        return tasks.stream().filter(predicate).map(Task::getStatus).toList();
+        return tasks.stream().filter(predicate).map(Task::getStatus).collect(Collectors.toList());
     }
 
     /**
