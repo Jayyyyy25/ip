@@ -3,6 +3,8 @@ package remy.ui;
 import java.io.IOException;
 import java.util.Collections;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -37,6 +41,13 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
+
+        Circle clip = new Circle(
+                displayPicture.getFitWidth() / 2,
+                displayPicture.getFitHeight() / 2,
+                Math.min(displayPicture.getFitWidth(), displayPicture.getFitHeight()) / 2
+        );
+        displayPicture.setClip(clip);
     }
 
     private void flip() {
@@ -55,6 +66,30 @@ public class DialogBox extends HBox {
         var db = new DialogBox(text, img);
         db.flip();
         return db;
+    }
+
+    /**
+     * Displays the given message with a typing effect, revealing one character at a time with a specified delay.
+     *
+     * @param message The message to be displayed with the typing effect.
+     * @param delayMillis The delay in milliseconds between each character reveal.
+     */
+    public void showTypingEffect(String message, int delayMillis) {
+        dialog.setText(""); // clear label first
+
+        Timeline timeline = new Timeline();
+        final int[] index = {0};
+
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(delayMillis), e -> {
+            if (index[0] < message.length()) {
+                dialog.setText(dialog.getText() + message.charAt(index[0]));
+                index[0]++;
+            }
+        });
+
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.setCycleCount(message.length());
+        timeline.play();
     }
 }
 
