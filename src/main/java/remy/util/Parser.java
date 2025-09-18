@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Arrays;
 import java.util.List;
 
@@ -295,7 +296,7 @@ public class Parser {
                 if (formatter.toString().contains("H")) {
                     return LocalDateTime.parse(input, formatter);
                 } else {
-                    return LocalDate.parse(input, formatter).atStartOfDay();
+                    return LocalDate.parse(input, formatter.withResolverStyle(ResolverStyle.STRICT)).atStartOfDay();
                 }
             } catch (DateTimeParseException ignored) {
                 continue;
