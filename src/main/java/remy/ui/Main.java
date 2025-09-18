@@ -25,6 +25,7 @@ public class Main extends Application {
             stage.setScene(scene);
             remy = new Remy(DEFAULT_FILEPATH);
             fxmlLoader.<MainWindow>getController().setRemy(remy);
+            stage.setTitle("Remy");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
