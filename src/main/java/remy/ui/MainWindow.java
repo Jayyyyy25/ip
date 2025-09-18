@@ -51,10 +51,11 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = remy.getResponse(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getRemyDialog(response, remyImage)
-        );
+        dialogContainer.getChildren().add(DialogBox.getUserDialog(input, userImage));
+
+        DialogBox remyDialog = DialogBox.getRemyDialog(response, remyImage);
+        dialogContainer.getChildren().add(remyDialog);
+        remyDialog.showTypingEffect(response, 20);
 
         if (input.trim().equals("bye")) {
             PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
