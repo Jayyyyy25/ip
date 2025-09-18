@@ -1,22 +1,5 @@
-D | 1 | techjam submission | Aug 31 2025 09:00
-D | 0 | homework | Sep 16 2025 23:59
-E | 0 | Meeting | Sep 01 2025 15:00 | Sep 01 2025 16:00
-D | 1 | Submit report | Sep 01 2025 23:59
-D | 0 | asgn 2 | Sep 01 2025 00:00
-D | 0 | Assignment | Sep 01 2025 23:59
-T | 0 | Reading
-T | 0 | 睡觉
-T | 0 | Reading
-T | 0 | Reading
-T | 0 | Reading
-T | 0 | Reading
-D | 0 | Assignment | Sep 01 2025 23:59
-T | 0 | Reading
-T | 0 | Reading
-T | 0 | Reading
-T | 0 | Reading
-T | 0 | Reading
-T | 0 | Reading
-T | 0 | Reading
-D | 0 | Assignment | Sep 01 2025 23:59
-T | 0 | Reading
+D | 1 | Assignment submission | Sep 19 2025 23:59
+E | 0 | Meeting | Sep 20 2025 15:00 | Sep 20 2025 16:00
+D | 1 | Submit report | Sep 25 2025 23:59
+D | 0 | Homework 2 | Sep 25 2025 12:00
+T | 0 | Reading chapter 5
