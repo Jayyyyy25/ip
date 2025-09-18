@@ -9,7 +9,7 @@ Remy designed to help you stay organized, your personal task assistant on the CL
 ## Before getting started
 
 1. Ensure you have Java 17 installed on your system.
-2. Download the latest version of Remy JAR file from the repositiory.
+2. Download the latest version of Remy JAR file from the repository.
 3. Open your terminal and navigate to the directory where you downloaded the JAR file.
 4. Run the application using the command: 
     ```
