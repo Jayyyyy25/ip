@@ -5,11 +5,4 @@ D | 1 | Submit report | Sep 01 2025 23:59
 D | 0 | asgn 2 | Sep 01 2025 00:00
 D | 0 | Assignment | Sep 01 2025 23:59
 T | 0 | Reading
-T | 0 | Reading
 D | 0 | Assignment | Sep 01 2025 23:59
-T | 0 | Reading
-T | 1 | Reading
-T | 0 | Reading
-D | 0 | Assignment | Sep 01 2025 23:59
-T | 0 | Reading
-T | 0 | bruh

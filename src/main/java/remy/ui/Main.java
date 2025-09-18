@@ -7,13 +7,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import remy.exception.RemyException;
 
 /**
  * Main class for running the GUI of Remy application
  */
 public class Main extends Application {
     private static final String DEFAULT_FILEPATH = "./data/remy.txt";
-    private Remy remy = new Remy(DEFAULT_FILEPATH);
+    private Remy remy;
 
     @Override
     public void start(Stage stage) {
@@ -22,6 +23,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            remy = new Remy(DEFAULT_FILEPATH);
             fxmlLoader.<MainWindow>getController().setRemy(remy);
             stage.show();
         } catch (IOException e) {

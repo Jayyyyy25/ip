@@ -91,34 +91,34 @@ public class Parser {
                 if (!argument.isEmpty() && canParseInt(argument)) {
                     return new EditCommand(1, Integer.parseInt(argument) - 1);
                 } else {
-                    throw new InvalidArgumentException("Please provide a valid index to mark as done.");
+                    throw new InvalidArgumentException("Provide a valid index to mark as done, PLEASE~");
                 }
             case UNMARK:
                 if (!argument.isEmpty() && canParseInt(argument)) {
                     return new EditCommand(0, Integer.parseInt(argument) - 1);
                 } else {
-                    throw new InvalidArgumentException("Please provide a valid index to mark as undone.");
+                    throw new InvalidArgumentException("Provide a valid index to mark as undone, PLEASE~");
                 }
             case DELETE:
                 if (!argument.isEmpty() && canParseInt(argument)) {
                     return new DeleteCommand(Integer.parseInt(argument) - 1);
                 } else {
-                    throw new InvalidArgumentException("Please provide a valid index to remove the remy.task.");
+                    throw new InvalidArgumentException("Provide a valid index to remove the task, PLEASE~");
                 }
             case FIND:
                 if (!argument.isEmpty()) {
                     return new FindCommand(argument.toLowerCase());
                 } else {
-                    throw new InvalidArgumentException("Please provide a keyword to search");
+                    throw new InvalidArgumentException("Provide a keyword to search, PLEASE~");
                 }
             default:
                 throw new InvalidCommandException(String.format(
-                        "Invalid command error: '%s' command not found", command));
+                        "'%s' command not found", command));
             }
         } catch (RemyException e) {
             throw e;
         } catch (Exception e) {
-            throw new InvalidCommandException(String.format("Invalid command error: '%s' command not found", command));
+            throw new InvalidCommandException(String.format("'%s' command not found", command));
         }
     }
 
@@ -136,21 +136,21 @@ public class Parser {
             String dateStr = argumentSplit[1].trim();
             if (dateStr.isEmpty()) {
                 throw new InvalidArgumentException(
-                        "Please use /on to specify a date for specific date listing.");
+                        "Use /on to specify a date for specific date listing, PLEASE~");
             }
             LocalDate date;
             try {
                 date = Parser.parseDateTime(dateStr).toLocalDate();
             } catch (Exception e) {
-                throw new InvalidDateFormatException(e.getMessage()
-                        + "Please use a valid date format (DD/MM/YYYY HH:MM) to specify date");
+                throw new InvalidDateFormatException("I don't like this date format.\n"
+                        + "Use a valid date format (DD/MM/YYYY HH:MM) to specify date, PLEASE~");
             }
             return new ListCommand(1, date);
         } else if (argument.contains("/recent")) {
             return new ListCommand(2);
         } else {
             throw new InvalidCommandException(String.format(
-                    "Invalid comment error: 'list %s' command not found", argument));
+                    "'list %s' command not found", argument));
         }
     }
 
@@ -180,7 +180,7 @@ public class Parser {
         }
 
         if (!argument.contains("/by")) {
-            throw new InvalidArgumentException("Please use /by to specify a deadline for deadline task");
+            throw new InvalidArgumentException("Use /by to specify a deadline for deadline task, PLEASE~");
         }
 
         String[] titleSplit = argument.split("/by", 2);
@@ -191,14 +191,14 @@ public class Parser {
         String ddlStr = titleSplit[1].trim();
         if (ddlStr.isEmpty()) {
             throw new InvalidArgumentException(
-                    "Please use /by to specify a deadline for deadline task.");
+                    "Use /by to specify a deadline for deadline task, PLEASE~");
         }
         LocalDateTime ddl;
         try {
             ddl = Parser.parseDateTime(ddlStr);
         } catch (Exception e) {
-            throw new InvalidDateFormatException(e.getMessage()
-                    + "\nPlease use a valid date format (DD/MM/YYYY HH:MM) to specify deadline");
+            throw new InvalidDateFormatException("I don't like this date format."
+                    + "\nUse a valid date format (DD/MM/YYYY HH:MM) to specify deadline, PLEASE~");
         }
         return new AddCommand(title, ddl);
     }
@@ -216,7 +216,7 @@ public class Parser {
 
         if (!argument.contains("/from") || !argument.contains("/to")) {
             throw new InvalidArgumentException(
-                    "Please use /from and /to to specify a date / time for event task.");
+                    "Use /from and /to to specify a date / time for event task, PLEASE~");
         }
 
         String[] fromSplit = argument.split("/from", 2);
@@ -229,7 +229,7 @@ public class Parser {
         String toStr = toSplit[1].trim();
         if (fromStr.isEmpty() || toStr.isEmpty()) {
             throw new InvalidArgumentException(
-                    "Please use /from and /to to specify a date / time for event remy.task.");
+                    "Use /from and /to to specify a date / time for event task, PLEASE~");
         }
         LocalDateTime from;
         LocalDateTime to;
@@ -238,7 +238,7 @@ public class Parser {
             to = Parser.parseDateTime(toStr);
         } catch (Exception e) {
             throw new InvalidDateFormatException(e.getMessage()
-                    + "\nPlease use a valid date format (DD/MM/YYYY HH:MM) to specify time");
+                    + "\nUse a valid date format (DD/MM/YYYY HH:MM) to specify time, PLEASE~");
         }
         return new AddCommand(title, from, to);
     }
