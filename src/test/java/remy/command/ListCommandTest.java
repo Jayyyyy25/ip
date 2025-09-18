@@ -62,7 +62,12 @@ public class ListCommandTest {
     }
 
     static class MockStorage extends Storage {
+        private static String lastAppendedLine = null;
 
+        @Override
+        public void appendLine(String line) {
+            lastAppendedLine = line;
+        }
     }
 }
 
