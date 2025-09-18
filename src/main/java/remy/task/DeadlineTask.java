@@ -34,11 +34,19 @@ public class DeadlineTask extends Task {
         this.by = by;
     }
 
+    /**
+     * Returns the status string of the deadline task, including its type, completion status, title,
+     * and formatted deadline date.
+     */
     @Override
     public String getStatus() {
         return String.format("[D]" + super.getStatus() + " (by: %s)", this.dateString());
     }
 
+    /**
+     * Returns the string representation of the deadline task for storage purposes,
+     * including its type, completion status, title, and deadline date.
+     */
     @Override
     public String toString() {
         return "D | " + super.toString() + " | " + this.dateString();

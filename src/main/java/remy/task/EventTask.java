@@ -39,12 +39,20 @@ public class EventTask extends Task {
         this.to = to;
     }
 
+    /**
+     * Returns the status string of the event task, including its type, completion status, title,
+     * and formatted start and end date/times.
+     */
     @Override
     public String getStatus() {
         return String.format("[E]" + super.getStatus() + " (from: %s, to: %s)", this.fromDateString(),
                 this.toDateString());
     }
 
+    /**
+     * Returns the string representation of the event task for storage purposes,
+     * including its type, completion status, title, and start and end date/times.
+     */
     @Override
     public String toString() {
         return "E | " + super.toString() + " | " + this.fromDateString() + " | " + this.toDateString();
