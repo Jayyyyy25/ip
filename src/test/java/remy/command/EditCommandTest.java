@@ -81,7 +81,13 @@ public class EditCommandTest {
     }
 
     static class MockStorage extends Storage {
+        private String lastAppendedLine = null;
         private String lastUpdatedLine = null;
+
+        @Override
+        public void appendLine(String line) {
+            lastAppendedLine = line;
+        }
 
         @Override
         public void updateLine(int lineNumber, String line) {
