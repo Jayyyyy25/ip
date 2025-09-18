@@ -48,8 +48,7 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "remy"
-    archiveClassifier = null
+    archiveFileName="remy.jar"
 }
 
 run{
