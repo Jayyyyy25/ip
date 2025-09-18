@@ -58,10 +58,25 @@ public class DialogBox extends HBox {
         dialog.getStyleClass().add("reply-label");
     }
 
+    /**
+     * Creates a dialog box for the user with the specified text and image.
+     *
+     * @param text The text to be displayed in the dialog box.
+     * @param img The image representing the user.
+     * @return A DialogBox instance containing the specified text and image.
+     */
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 
+    /**
+     * Creates a dialog box for Remy with the specified text and image.
+     * The dialog box is flipped to position the image on the left side.
+     *
+     * @param text The text to be displayed in the dialog box.
+     * @param img The image representing Remy.
+     * @return A DialogBox instance containing the specified text and image, with the image on the left side.
+     */
     public static DialogBox getRemyDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();

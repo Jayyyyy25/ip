@@ -26,7 +26,6 @@ public class Remy {
         try {
             tasks = new TaskList(storage.load());
         } catch (RemyException e) {
-            ui.showLoadingError();
             tasks = new TaskList();
         }
     }

@@ -24,30 +24,7 @@ public class Ui {
      */
     public String showWelcome(TaskList tasks, Ui ui, Storage storage) {
         String recentTasks = new ListCommand(2).execute(tasks, ui, storage);
-        return "Hello! I'm " + name + ".\n" + recentTasks + "\nWhat can I do for you?";
-    }
-
-    /**
-     * Prints error message when failed to fetch data from hard disk
-     */
-    public String showLoadingError() {
-        return "Failed to fetch hard disk record";
-    }
-
-    /**
-     * Fetches user's input
-     *
-     * @return User input
-     */
-    public String readComment() {
-        return scanner.nextLine().trim();
-    }
-
-    /**
-     * Prints error message
-     */
-    public String showError(String errMessage) {
-        return errMessage;
+        return name + " is here.\n" + recentTasks + "\nWhat can I do for you?";
     }
 
     /**
@@ -58,7 +35,7 @@ public class Ui {
      * @param task the deleted task, used to display its task status
      */
     public String showDeleted(TaskList tasks, Task task) {
-        return "Noted. I've removed this remy.task.\n\t" + task.getStatus()
+        return "Noted. I've removed this task.\n\t" + task.getStatus()
                 + "\nNow you have " + tasks.getSize() + " tasks in the list.";
     }
 
@@ -70,7 +47,7 @@ public class Ui {
      * @param taskInd the added task, used to display its task status
      */
     public String showAdded(TaskList tasks, int taskInd) {
-        return "Got it. I've added this remy.task:\n\t" + tasks.getTaskStatus(taskInd)
+        return "Got it. I've added this task:\n\t" + tasks.getTaskStatus(taskInd)
                 + "\nNow you have " + tasks.getSize() + " tasks in the list.";
     }
 
@@ -82,7 +59,7 @@ public class Ui {
      * @param taskInd the task marked as done, used to display its task status
      */
     public String showMark(TaskList tasks, int taskInd) {
-        return "Nice, I've marked this remy.task as done:\n\t" + tasks.getTaskStatus(taskInd);
+        return "Nice, I've marked this task as done:\n\t" + tasks.getTaskStatus(taskInd);
     }
 
     /**
@@ -93,14 +70,14 @@ public class Ui {
      * @param taskInd the task unmarked as done, used to display its task status
      */
     public String showUnmark(TaskList tasks, int taskInd) {
-        return "OK! I've marked this remy.task as not done yet:\n\t" + tasks.getTaskStatus(taskInd);
+        return "OK! I've marked this task as not done yet:\n\t" + tasks.getTaskStatus(taskInd) + "\nKeep it up!";
     }
 
     /**
      * Prints farewell message when program is exiting
      */
     public String showBye() {
-        return "Bye! Hope to see you soon!";
+        return "Bye! Hope to see you soon, your Majesty.";
     }
 
     /**
