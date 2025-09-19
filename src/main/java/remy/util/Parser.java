@@ -124,7 +124,7 @@ public class Parser {
     }
 
     /**
-     * Parse a list command arguments into an executable command
+     * Parses a list command arguments into an executable command
      *
      * @param argument Argument given by the user
      * @return A {@code ListCommand}
@@ -156,7 +156,7 @@ public class Parser {
     }
 
     /**
-     * Parse a TodoTask command argument into an executable command
+     * Parses a TodoTask command argument into an executable command
      *
      * @param argument Arguments such as title
      * @return A {@code AddCommand}
@@ -170,7 +170,7 @@ public class Parser {
     }
 
     /**
-     * Parse a DeadlineTask command argument into an executable command
+     * Parses a DeadlineTask command argument into an executable command
      *
      * @param argument Arguments such as title and deadline
      * @return A {@code AddCommand}
@@ -205,7 +205,7 @@ public class Parser {
     }
 
     /**
-     * Parse a EventTask command argument into an executable command
+     * Parses a EventTask command argument into an executable command
      *
      * @param argument Arguments such as title, event start date, event end date
      * @return A {@code AddCommand}

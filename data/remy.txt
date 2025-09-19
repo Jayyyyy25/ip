@@ -3,3 +3,4 @@ E | 0 | Meeting | Sep 20 2025 15:00 | Sep 20 2025 16:00
 D | 1 | Submit report | Sep 25 2025 23:59
 D | 0 | Homework 2 | Sep 25 2025 12:00
 T | 0 | Reading chapter 5
+T | 0 | Reading

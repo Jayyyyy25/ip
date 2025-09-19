@@ -26,17 +26,17 @@ public class ExitCommandTest {
         ExitCommand cmd = new ExitCommand();
         cmd.execute(tasks, ui, storage);
 
-        assertTrue(ui.exitWasCalled);
+        assertTrue(ui.isExitCalled);
     }
 
     // --------- Mock dependencies ---------
 
     static class MockUi extends Ui {
-        private boolean exitWasCalled = false;
+        private boolean isExitCalled = false;
 
         @Override
         public String showBye() {
-            exitWasCalled = true;
+            isExitCalled = true;
             return "";
         }
     }
