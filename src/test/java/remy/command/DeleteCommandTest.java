@@ -32,19 +32,19 @@ public class DeleteCommandTest {
 
         assertEquals(0, tasks.getSize());
         assertEquals(null, storage.lastAppendedLine);
-        assertTrue(ui.deletedWasCalled);
+        assertTrue(ui.isDeleteCalled);
         assertEquals(-1, ui.lastIndex);
     }
 
     // --------- Mock dependencies ---------
 
     static class MockUi extends Ui {
-        private boolean deletedWasCalled = false;
+        private boolean isDeleteCalled = false;
         private int lastIndex = -1;
 
         @Override
         public String showDeleted(TaskList tasks, Task task) {
-            deletedWasCalled = true;
+            isDeleteCalled = true;
             lastIndex = -1;
             return "";
         }

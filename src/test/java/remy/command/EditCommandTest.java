@@ -33,7 +33,7 @@ public class EditCommandTest {
 
         assertTrue(tasks.getTaskStatus(0).contains("[X]"));
         assertEquals(tasks.getTaskString(0), storage.lastUpdatedLine);
-        assertTrue(ui.markWasCalled);
+        assertTrue(ui.isMarkCalled);
         assertEquals(0, ui.taskInd);
     }
 
@@ -46,7 +46,7 @@ public class EditCommandTest {
 
         assertTrue(tasks.getTaskStatus(0).contains("[ ]"));
         assertEquals(tasks.getTaskString(0), storage.lastUpdatedLine);
-        assertTrue(ui.unmarkWasCalled);
+        assertTrue(ui.isUnmarkCalled);
         assertEquals(0, ui.taskInd);
     }
 
@@ -61,20 +61,20 @@ public class EditCommandTest {
     // --------- Mock dependencies ---------
 
     static class MockUi extends Ui {
-        private boolean markWasCalled = false;
-        private boolean unmarkWasCalled = false;
+        private boolean isMarkCalled = false;
+        private boolean isUnmarkCalled = false;
         private int taskInd = -1;
 
         @Override
         public String showMark(TaskList tasks, int taskInd) {
-            markWasCalled = true;
+            isMarkCalled = true;
             this.taskInd = taskInd;
             return "";
         }
 
         @Override
         public String showUnmark(TaskList tasks, int taskInd) {
-            unmarkWasCalled = true;
+            isUnmarkCalled = true;
             this.taskInd = taskInd;
             return "";
         }
